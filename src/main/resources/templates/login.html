@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | StudySmart Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* === Background Gradient Animation === */
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: "Poppins", sans-serif;
+          background: linear-gradient(-45deg, #ff758c, #ff7eb3, #8e2de2, #4a00e0);
+          background-size: 400% 400%;
+          animation: gradientBG 12s ease infinite;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+        }
+
+        /* === Particle Layer === */
+        .particles {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          overflow: hidden;
+        }
+
+        .particle {
+          position: absolute;
+          background: rgba(255, 255, 255, 0.25);
+          border-radius: 50%;
+          animation: float 6s infinite ease-in-out;
+        }
+
+        /* === Main Card === */
+        .container {
+          background: rgba(255, 255, 255, 0.12);
+          backdrop-filter: blur(25px);
+          border-radius: 25px;
+          padding: 50px 40px;
+          width: 100%;
+          max-width: 420px;
+          color: #fff;
+          text-align: center;
+          box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+          position: relative;
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          overflow: hidden;
+          animation: fadeInUp 0.9s ease;
+          transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .container::before {
+          content: "";
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.1), transparent 40%);
+          animation: rotateShine 6s linear infinite;
+        }
+
+        /* === Title === */
+        h2 {
+          font-size: 32px;
+          margin-bottom: 30px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          background: linear-gradient(135deg, #ffffff, #c2f0ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          position: relative;
+        }
+
+        h2::after {
+          content: '';
+          display: block;
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(135deg, #43cea2, #185a9d);
+          margin: 10px auto 0;
+          border-radius: 2px;
+        }
+
+        /* === Inputs === */
+        .input-group {
+          position: relative;
+          margin: 25px 0;
+        }
+
+        input {
+          width: 100%;
+          padding: 15px 50px 15px 20px;
+          border: none;
+          border-radius: 12px;
+          outline: none;
+          background: rgba(255, 255, 255, 0.9);
+          font-size: 16px;
+          color: #333;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+        }
+
+        input:focus {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+          background: #fff;
+        }
+
+        /* === Login Button === */
+        .btn-login {
+          width: 100%;
+          padding: 15px;
+          border: none;
+          border-radius: 12px;
+          background: linear-gradient(135deg, #43cea2, #185a9d);
+          color: #fff;
+          font-size: 17px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 6px 25px rgba(24, 90, 157, 0.4);
+        }
+
+        .btn-login:hover {
+          background: linear-gradient(135deg, #5ee7df, #b490ca);
+          transform: translateY(-3px);
+          box-shadow: 0 10px 35px rgba(190, 190, 255, 0.4);
+        }
+
+        /* === Error & Success Messages === */
+        .error, .success {
+          text-align: center;
+          padding: 14px;
+          border-radius: 12px;
+          margin-bottom: 20px;
+          font-size: 14px;
+          font-weight: 500;
+          backdrop-filter: blur(10px);
+        }
+
+        .error {
+          background: rgba(255, 0, 0, 0.25);
+          color: #ffb3b3;
+        }
+
+        .success {
+          background: rgba(0, 255, 100, 0.25);
+          color: #b2ffb3;
+        }
+
+        /* === Register Link === */
+        .register-link {
+          margin-top: 25px;
+          font-size: 15px;
+        }
+
+        .register-link a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: 500;
+          transition: 0.3s ease;
+          position: relative;
+        }
+
+        .register-link a:hover {
+          color: #00eaff;
+          text-shadow: 0 0 8px rgba(0, 234, 255, 0.7);
+        }
+
+        /* === Animations === */
+        @keyframes gradientBG {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotateShine {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === Responsive === */
+        @media (max-width: 480px) {
+          .container {
+            padding: 35px 25px;
+            margin: 20px;
+          }
+          h2 {
+            font-size: 26px;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Login Card -->
+<div class="container">
+    <h2>Welcome Back 👋</h2>
+
+    <!-- Error Message -->
+    <div th:if="${param.error}" class="error">
+        ❌ Invalid username or password!
+    </div>
+
+    <!-- Logout Message -->
+    <div th:if="${param.logout}" class="success">
+        ✅ You have been logged out successfully!
+    </div>
+
+    <!-- Login Form -->
+    <form th:action="@{/login}" method="post">
+        <div class="input-group">
+            <input type="text" name="username" placeholder="👤 Username" required>
+        </div>
+        <div class="input-group">
+            <input type="password" name="password" placeholder="🔒 Password" required>
+        </div>
+        <button type="submit" class="btn-login">Login to StudySmart Pro</button>
+    </form>
+
+    <div class="register-link">
+        <a th:href="@{/register}">New here? Create your account →</a>
+    </div>
+</div>
+
+<script>
+    // Create floating particles
+    function createParticles() {
+      const container = document.getElementById("particles");
+      const count = 20;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement("div");
+        p.classList.add("particle");
+        const size = Math.random() * 50 + 10;
+        p.style.width = `${size}px`;
+        p.style.height = `${size}px`;
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.top = `${Math.random() * 100}%`;
+        p.style.animationDuration = `${Math.random() * 10 + 6}s`;
+        container.appendChild(p);
+      }
+    }
+    document.addEventListener("DOMContentLoaded", createParticles);
+</script>
+</body>
+</html>
