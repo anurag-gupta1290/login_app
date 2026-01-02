@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudySmart Pro | AI Learning Platform</title>
@@ -290,7 +292,138 @@
                 background-position: 50px 50px;
             }
         }
+        /* ===== ASSIGNMENT SECTION STYLING ===== */
 
+        /* Container Setup */
+        #assignment-list-container {
+            display: grid;
+            gap: 15px;
+            padding: 10px;
+            max-height: 500px; /* Scrollable if many tasks */
+            overflow-y: auto;
+        }
+
+        /* Individual Assignment Card */
+        .assignment-item {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            padding: 20px !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            margin-bottom: 10px;
+        }
+
+        .assignment-item:hover {
+            transform: translateY(-5px) scale(1.01);
+            background: #ffffff;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: #00d2ff;
+        }
+
+        /* Typography */
+        .assignment-item h5 {
+            color: #2d3436;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            letter-spacing: -0.2px;
+        }
+
+        .assignment-item p {
+            color: #636e72;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Status Badges */
+        .text-success, .text-danger {
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 50px;
+        }
+
+        .text-success {
+            background: rgba(46, 213, 115, 0.15);
+            color: #218c74 !important;
+        }
+
+        .text-danger {
+            background: rgba(255, 71, 87, 0.15);
+            color: #eb4d4b !important;
+        }
+
+        /* Buttons Styling */
+        .assignment-item .btn {
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 8px 18px !important;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+        }
+
+        .btn-outline-primary {
+            border: 1.5px solid #3a7bd5 !important;
+            color: #3a7bd5 !important;
+            background: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background: #3a7bd5 !important;
+            color: #fff !important;
+        }
+
+        .btn-outline-secondary {
+            border: 1.5px solid #636e72 !important;
+            color: #636e72 !important;
+        }
+
+        /* Custom Scrollbar */
+        #assignment-list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #assignment-list-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #assignment-list-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Modal Enhancements */
+        .modal-content {
+            border: none;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .form-control {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            padding: 12px 20px;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            background: #fff;
+            border-color: #00d2ff;
+            box-shadow: 0 0 0 4px rgba(0, 210, 255, 0.1);
+        }
         /* Course Cards */
         /* Course Grid Container – all cards equal height */
         /* Video Wrapper ko Card ke upar "Full Width" dikhane ke liye */
@@ -539,6 +672,92 @@
 
         .modal-overlay.active .modal-content {
             transform: scale(1);
+        }
+        /* Leaderboard Modern Design */
+
+        .leader-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            transition: transform 0.2s ease;
+            /* Light mode defaults */
+            background: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        /* --- LEADERBOARD THEME FIX --- */
+        :root {
+            --lb-bg: #ffffff;
+            --lb-text: #1e293b;
+            --lb-border: #e2e8f0;
+        }
+
+        /* Agar aap dark mode ke liye 'dark' class use karte hain */
+        body.dark-mode, [data-theme="dark"] {
+            --lb-bg: #1e293b;   /* Dark background */
+            --lb-text: #f8fafc; /* White text */
+            --lb-border: #334155;
+        }
+
+        .custom-leader-item {
+            background-color: var(--lb-bg) !important;
+            color: var(--lb-text) !important;
+            border: 1px solid var(--lb-border) !important;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .custom-leader-item.is-me {
+            background-color: rgba(99, 102, 241, 0.15) !important;
+            border: 1px solid #6366f1 !important;
+        }
+        /* Dark Mode Adaptation */
+        [data-theme="dark"] .leader-item,
+        body.dark-mode .leader-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .leader-item:hover {
+            transform: scale(1.02);
+        }
+
+        /* "You" special styling */
+        .leader-item.is-me {
+            border-left: 4px solid #6366f1 !important;
+            background: rgba(99, 102, 241, 0.1) !important;
+        }
+
+        .leader-name {
+            font-weight: 500;
+            color: var(--text-color, #1e293b); /* Fallback to dark if var not set */
+        }
+
+        [data-theme="dark"] .leader-name,
+        body.dark-mode .leader-name {
+            color: #f8fafc;
+        }
+
+        .rank-number {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            width: 25px;
+            display: inline-block;
+        }
+
+        .progress-label {
+            font-weight: 700;
+            color: #10b981; /* Green color stays same for both */
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
         }
 
         /* Responsive */
@@ -892,10 +1111,100 @@
         }
 
         /* Calendar */
+        /* --- THEME INDEPENDENT CALENDAR --- */
+        /* Ye CSS hona zaroori hai tabhi grid banegi */
+        /* Purana hatakar ye wala copy karein */
+        #calendarGrid {
+            display: grid !important;
+            grid-template-columns: repeat(7, 1fr) !important;
+            gap: 8px;
+            padding: 15px;
+            background: var(--cal-bg);
+            border-radius: 12px;
+            min-height: 300px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1; /* Din ko barabar square banata hai */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            position: relative;
+            color: var(--cal-text);
+        }
+
+        .calendar-day:hover:not(.empty):not(.fw-bold) {
+            background-color: var(--cal-hover);
+            transform: scale(1.1);
+        }
+
+        .calendar-day.active {
+            background: #6366f1 !important;
+            color: white !important;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ef4444; /* Red Dot */
+            border-radius: 50%;
+            position: absolute;
+            bottom: 4px;
+        }
+        .calendar-day:hover {
+            background: #f0f0f0;
+        }
+
+        .calendar-day.active {
+            background: var(--primary) !important;
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .calendar-day.has-event {
+            position: relative;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            width: 4px;
+            height: 4px;
+            background: var(--danger);
+            border-radius: 50%;
+        }
+        :root {
+            --cal-bg: #ffffff;
+            --cal-text: #1e293b;
+            --cal-border: #e2e8f0;
+            --cal-hover: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Dark Mode Detect (Body class check) */
+        body.dark-mode, [data-theme="dark"] {
+            --cal-bg: #1e293b;   /* Dark Slate */
+            --cal-text: #f8fafc; /* Off White */
+            --cal-border: #334155;
+            --cal-hover: rgba(255, 255, 255, 0.05);
+        }
+
         .calendar {
-            background: white;
+            background-color: var(--cal-bg) !important;
+            color: var(--cal-text) !important;
+            border: 1px solid var(--cal-border);
             border-radius: 15px;
             padding: 20px;
+            transition: all 0.3s ease;
         }
 
         .calendar-header {
@@ -918,22 +1227,35 @@
             justify-content: center;
             border-radius: 8px;
             position: relative;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--cal-text) !important; /* Force text color */
         }
+
+        /* Header (Sun, Mon...) colors */
+        .calendar-day.fw-bold {
+            color: #6366f1 !important; /* Theme Purple */
+        }
+
+        .calendar-day:hover:not(.active) {
+            background-color: var(--cal-hover);
+        }
+
         .calendar-day.active {
-            background: var(--primary);
-            color: white;
+            background: #6366f1 !important;
+            color: white !important; /* Blue background pe white text hamesha */
+            font-weight: bold;
         }
 
         .calendar-day.has-event::after {
             content: '';
             width: 6px;
             height: 6px;
-            background: var(--danger);
+            background: #ef4444; /* Red dot */
             border-radius: 50%;
             position: absolute;
             bottom: 5px;
         }
-
         /* Leaderboard */
         .leaderboard-item {
             display: flex;
@@ -1104,7 +1426,7 @@
                 <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <div class="stat-value">84%</div>
+                <div id="overall-progress-dashboard" class="stat-value">0%</div>
                 <div class="stat-label">Overall Progress</div>
             </div>
 
@@ -1639,58 +1961,70 @@
     </div>
 
     <!-- Assignments Section -->
+    <!-- Assignments Section -->
+
     <div id="assignments" class="section">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="text-white"><i class="fas fa-tasks"></i> Assignments & Projects</h1>
-            <button class="btn btn-custom" onclick="createNewAssignment()">
-                <i class="fas fa-plus"></i> New Assignment
+            <h2 class="fw-bold mb-0" style="color: #ffffff; letter-spacing: -0.5px;">
+                <i class="fas fa-tasks me-2" style="color: #6366f1;"></i> Assignments & Projects
+            </h2>
+            <button class="btn btn-primary rounded-pill px-4 shadow-sm fw-medium"
+                    onclick="openCreateModal()"
+                    style="transition: transform 0.2s;">
+                <i class="fas fa-plus me-1"></i> New Assignment
             </button>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <div class="assignment-item d-flex justify-content-between align-items-center p-3 border-bottom">
-                    <div>
-                        <h5 class="mb-1">Java Spring Boot Project</h5>
-                        <p class="text-muted mb-0">Create REST API with authentication & database</p>
-                        <small class="text-danger"><i class="fas fa-clock"></i> Due: Tomorrow, 11:59 PM</small>
-                    </div>
-                    <div>
-                        <button class="btn btn-success btn-sm me-2" onclick="submitAssignment('Java Spring Boot Project')">
-                            <i class="fas fa-paper-plane"></i> Submit
-                        </button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="viewAssignment('Java Spring Boot Project')">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                    </div>
+        <div class="card shadow-sm border-0 mb-4" style="border-radius: 15px; background: #ffffff;">
+            <div id="assignment-list-container" class="card-body p-0">
+                <div class="text-center p-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2 text-muted">Bhai, data load ho raha hai...</p>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="assignment-item d-flex justify-content-between align-items-center p-3 border-bottom">
-                    <div>
-                        <h5 class="mb-1">Machine Learning Report</h5>
-                        <p class="text-muted mb-0">Analyze dataset and build prediction model</p>
-                        <small class="text-warning"><i class="fas fa-clock"></i> Due: 3 days</small>
-                    </div>
-                    <div>
-                        <button class="btn btn-warning btn-sm me-2" onclick="workOnAssignment('Machine Learning Report')">
-                            <i class="fas fa-edit"></i> Work On
-                        </button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="viewAssignment('Machine Learning Report')">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                    </div>
+    <div class="modal fade" id="newAssignmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="modal-title fw-bold text-dark"><i class="fas fa-plus-circle me-2 text-primary"></i>Add New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                <div class="modal-body p-4">
+                    <form id="newAssignmentForm">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Title</label>
+                            <input type="text" class="form-control rounded-pill" id="taskTitle" required placeholder="e.g. Java Project">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Description</label>
+                            <textarea class="form-control" id="taskDesc" rows="3" style="border-radius: 15px;" placeholder="Details here..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Due Date</label>
+                            <input type="datetime-local" class="form-control rounded-pill" id="taskDate" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold">Save Assignment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="assignment-item d-flex justify-content-between align-items-center p-3">
-                    <div>
-                        <h5 class="mb-1">Web Development Portfolio</h5>
-                        <p class="text-muted mb-0">Build responsive portfolio website with 5 pages</p>
-                        <small class="text-success"><i class="fas fa-check"></i> Submitted</small>
-                    </div>
-                    <div>
-                        <button class="btn btn-custom" onclick="downloadResource('Portfolio.pdf', 'Web Development Portfolio')">
-                            <i class="fas fa-download"></i> Download
-                        </button>
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="modal-title fw-bold text-dark" id="vTitle">Project Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p id="vDesc" class="text-muted"></p>
+                    <div class="p-3 bg-light rounded-3">
+                        <small class="text-secondary d-block">Deadline:</small>
+                        <strong id="vDate" class="text-dark"></strong>
                     </div>
                 </div>
             </div>
@@ -2055,7 +2389,9 @@
     <!-- NEW: Calendar Section -->
     <div id="calendar" class="section">
         <h1 class="text-white mb-4"><i class="fas fa-calendar-alt"></i> Study Calendar</h1>
-
+        <a class="nav-link" onclick="showSection('calendar')">
+            <i class="fas fa-calendar-alt"></i> <span>Study Calendar</span>
+        </a>
         <div class="card">
             <div class="card-body">
                 <div class="calendar">
@@ -2170,6 +2506,9 @@
 <div id="notificationContainer"></div>
 
 <script>
+
+
+
     // Navigation System
     function showSection(sectionId) {
         // Hide all sections
@@ -2692,62 +3031,195 @@
     function closeModal(id) {
         document.getElementById(id).classList.remove("active");
     }
-
+    // Section - 3 Assigment
     // ------------------------------
-    // ASSIGNMENT ACTION FUNCTIONS
+    // Section - 3 Assignment Logic
     // ------------------------------
-    function submitAssignment(name) {
-        showNotification(`📤 Submitting "${name}"...`);
-        setTimeout(() => {
-            showNotification(`✅ "${name}" submitted successfully!`);
-        }, 1500);
+
+    // 1. Helper function to get ID safely
+    function getUserId() {
+        const id = sessionStorage.getItem("userId");
+        // Agar ID nahi milti toh default 83 (test ke liye) ya null return karein
+        return (id && id !== "null") ? id : 83;
     }
 
-    function viewAssignment(name) {
-        const modalTitle = document.getElementById("assignmentModalTitle");
-        const modalContent = document.getElementById("assignmentModalContent");
+    // 2. Fetch Assignments from Backend
+    async function fetchAssignments() {
+        const container = document.getElementById('assignment-list-container');
+        const userId = getUserId(); // Har baar fresh ID uthayein
 
-        modalTitle.textContent = name;
-        modalContent.innerHTML = `
-        <p><strong>Description:</strong> Auto-generated project details.</p>
-        <p><strong>Due Date:</strong> ${new Date(Date.now() + 86400000).toLocaleDateString()}</p>
-        <p><strong>Points:</strong> 100</p>
-        <p><strong>Status:</strong> <span class="badge bg-warning">In Progress</span></p>
+        if (!userId) {
+            container.innerHTML = '<p class="text-center p-4 text-warning">Please login to see assignments.</p>';
+            return;
+        }
 
-        <div class="mt-3">
-            <textarea class="form-control" rows="4" placeholder="Write notes..."></textarea>
-            <button class="btn btn-success w-100 mt-2" data-action="submit" data-name="${name}">
-                <i class="fas fa-paper-plane"></i> Submit Assignment
-            </button>
-        </div>
-    `;
+        try {
+            const res = await fetch(`/api/assignments/user/${userId}`);
+            if (!res.ok) throw new Error("Fetch failed");
 
-        showModal("assignmentModal");
+            const data = await res.json();
+
+            if (data.length === 0) {
+                container.innerHTML = '<div class="p-5 text-center text-muted">Abhi koi assignment nahi hai. Naya banayein!</div>';
+                return;
+            }
+
+            container.innerHTML = data.map(task => {
+                const isSubmitted = task.status === "Submitted";
+                // Buttons mein data- attributes add karein taaki dynamic event listener kaam kare
+                return `
+            <div class="assignment-item d-flex justify-content-between align-items-center p-3 border-bottom">
+                <div>
+                    <h5 class="mb-1 fw-bold text-dark">${task.title}</h5>
+                    <p class="text-muted mb-0 small">${task.description || ''}</p>
+                    <small class="${isSubmitted ? 'text-success' : 'text-danger'}">
+                        <i class="fas ${isSubmitted ? 'fa-check-circle' : 'fa-clock'}"></i>
+                        ${isSubmitted ? 'Submitted' : 'Due: ' + new Date(task.dueDate).toLocaleDateString()}
+                    </small>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    ${!isSubmitted ? `
+                        <button class="btn btn-success btn-sm rounded-pill px-3"
+                                data-action="submit" data-id="${task.id}" data-name="${task.title}">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    ` : `
+                        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                                data-action="download" data-name="${task.title}">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    `}
+                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                            onclick="viewTask('${task.title}', '${task.description}', '${task.dueDate}')">
+                        <i class="fas fa-eye"></i> View
+                    </button>
+                </div>
+            </div>`;
+            }).join('');
+        } catch (err) {
+            console.error(err);
+            container.innerHTML = '<p class="text-center p-4 text-danger">Server error! Check connectivity.</p>';
+        }
     }
 
-    function workOnAssignment(name) {
-        showNotification(`💻 Opening workspace for "${name}"...`);
-        setTimeout(() => {
-            showNotification(`🚀 Workspace ready! Start working.`);
-        }, 1200);
+    // 3. Submit Assignment (Fixed logic)
+    async function submitTask(id, name) {
+        const userId = getUserId();
+
+        if (userId === 83) { // Agar default use ho raha hai toh warning dein
+            console.warn("Using default testing ID 83");
+        }
+
+        if(!confirm(`Kya aap "${name}" submit karna chahte hain?`)) return;
+
+        try {
+            // userId query param mein bhejna backend ki requirement ke hisaab se sahi hai
+            const res = await fetch(`/api/assignments/${id}/submit?userId=${userId}`, { method: 'PUT' });
+
+            if (res.ok) {
+                alert("Assignment successfully submit ho gaya!");
+                fetchAssignments(); // Refresh list
+            } else {
+                const errorMsg = res.status === 403 ? "Unauthorized attempt!" : "Submission fail ho gayi.";
+                alert(errorMsg);
+            }
+        } catch (err) {
+            alert("Network error!");
+        }
     }
 
-    function viewSubmission(name) {
-        showNotification(`📥 Downloading "${name}"...`);
-        setTimeout(() => {
-            showNotification(`✅ Download complete!`);
-        }, 1200);
+    // 4. Create New Assignment
+    document.getElementById('newAssignmentForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const userId = getUserId();
+
+        const payload = {
+            title: document.getElementById('taskTitle').value,
+            description: document.getElementById('taskDesc').value,
+            dueDate: document.getElementById('taskDate').value,
+            status: "Pending"
+        };
+
+        try {
+            const res = await fetch(`/api/assignments/user/${userId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                const modalEl = document.getElementById('newAssignmentModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
+                this.reset();
+                fetchAssignments();
+            }
+        } catch (err) { console.error(err); }
+    });
+
+    // 5. DYNAMIC EVENT DELEGATION (Fixing your Click Handler)
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
+
+        const action = btn.getAttribute("data-action");
+        const name = btn.getAttribute("data-name");
+        const id = btn.getAttribute("data-id");
+
+        if (action === "submit") {
+            submitTask(id, name);
+        } else if (action === "download") {
+            alert("Downloading " + name + "...");
+        }
+        // Baaki actions (view, work) yahan add kar sakte hain
+    });
+    // 6. View Task Details Function
+    function viewTask(title, desc, date) {
+        // Modal ke elements mein data fill karein
+        document.getElementById('vTitle').innerText = title;
+        document.getElementById('vDesc').innerText = desc || "No description provided.";
+
+        // Date format sahi karein
+        const formattedDate = new Date(date).toLocaleString('en-IN', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        });
+        document.getElementById('vDate').innerText = formattedDate;
+
+        // Bootstrap Modal ko show karein
+        const viewModalEl = document.getElementById('viewModal');
+        const viewModal = new bootstrap.Modal(viewModalEl);
+        viewModal.show();
+    }
+    // 7. Open Create Modal Function
+    function openCreateModal() {
+        const createModalEl = document.getElementById('newAssignmentModal');
+        const createModal = new bootstrap.Modal(createModalEl);
+        createModal.show();
     }
 
-    function createNewAssignment() {
-        showNotification(`🆕 Generating new assignment...`);
-        setTimeout(() => {
-            showNotification(`📝 New assignment is ready!`);
-        }, 1200);
-    }
+    // 8. Event Listener Update (Click Handler)
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
 
+        const action = btn.getAttribute("data-action");
+
+        // Naya logic yahan add karein
+        if (action === "new") {
+            openCreateModal();
+        } else if (action === "submit") {
+            const id = btn.getAttribute("data-id");
+            const name = btn.getAttribute("data-name");
+            submitTask(id, name);
+        }
+        // ... baki actions
+    });
+
+    // Initial Load
+    document.addEventListener("DOMContentLoaded", fetchAssignments);
     // --------------------------------------
-    // DYNAMIC BUTTON EVENT HANDLER (MAGIC)
+    // DYNAMIC BUTTON EVENT HANDLER (FIXED)
     // --------------------------------------
     document.addEventListener("click", function (e) {
         const btn = e.target.closest("[data-action]");
@@ -2755,10 +3227,11 @@
 
         const action = btn.getAttribute("data-action");
         const name = btn.getAttribute("data-name") || "Untitled Assignment";
+        const id = btn.getAttribute("data-id"); // ID catch karein
 
         const actionMap = {
-            "view": () => viewAssignment(name),
-            "submit": () => submitAssignment(name),
+            "view": () => viewAssignment(id, name),
+            "submit": () => submitAssignment(id, name),
             "work": () => workOnAssignment(name),
             "download": () => viewSubmission(name),
             "new": () => createNewAssignment()
@@ -2864,8 +3337,11 @@
     // --- 4. DASHBOARD & OVERALL PROGRESS CALCULATION ---
     async function loadDashboardData() {
         const container = document.getElementById('dynamic-course-list');
-        const overallText = document.getElementById('overall-percentage'); // Aapki ID: overall-percentage
-        const statusMsg = document.getElementById('progress-status-msg');   // Aapki ID: progress-status-msg
+        const overallText = document.getElementById('overall-percentage');
+        const statusMsg = document.getElementById('progress-status-msg');
+
+        // --- CHANGE 1: Dashboard card ki ID yaha add ki ---
+        const dashboardCardText = document.getElementById('overall-progress-dashboard');
 
         if (!container || !loggedInUser.id) return;
 
@@ -2877,12 +3353,12 @@
             let totalPercentage = 0;
 
             if (!courses || courses.length === 0) {
-                container.innerHTML = '<div class="alert alert-info">No progress data found. Watch videos to start!</div>';
+                container.innerHTML = '<div class="alert alert-info">No progress data found.</div>';
                 if (overallText) overallText.innerText = "0%";
+                if (dashboardCardText) dashboardCardText.innerText = "0%"; // Dashboard ko reset karein
                 return;
             }
 
-            // Individual Course Bars banayein
             courses.forEach(c => {
                 const name = c.courseName || "Course";
                 const pct = Math.round(c.progressPercentage || 0);
@@ -2904,15 +3380,17 @@
             </div>`;
             });
 
-            // --- MATH: OVERALL PROGRESS ---
             const average = Math.round(totalPercentage / courses.length);
 
-            // UI Update: Overall Percentage
+            // --- CHANGE 2: Dashboard card ki value yaha update ki ---
+            if (dashboardCardText) {
+                dashboardCardText.innerText = `${average}%`;
+            }
+
             if (overallText) {
                 overallText.innerText = `${average}%`;
             }
 
-            // UI Update: Dynamic Status Message
             if (statusMsg) {
                 if (average === 0) statusMsg.innerText = "Start your first module today! 🎯";
                 else if (average < 50) statusMsg.innerText = "Good start! You are making progress. 🚀";
@@ -2926,7 +3404,7 @@
         }
     }
 
-    //5. Leaderboard
+    // --- 5. LEADERBOARD UPDATED ---
     async function loadLeaderboard() {
         const lb = document.getElementById('leaderboard-container');
         if (!lb) return;
@@ -2935,30 +3413,29 @@
             const res = await fetch(`/api/progress/leaderboard`);
             const data = await res.json();
 
-            console.log("Leaderboard Live Data:", data); // Check if keys are 'username' and 'progress'
-
             if (!data || data.length === 0) {
                 lb.innerHTML = '<div class="text-muted p-3 text-center">No data available.</div>';
                 return;
             }
 
             lb.innerHTML = data.map((item, i) => {
-                // Controller ke Map keys use karein
                 const name = item.username || "Learner";
                 const progressValue = item.progress || 0;
                 const progress = parseFloat(progressValue).toFixed(1);
-
                 const isMe = (name === loggedInUser.username);
 
                 return `
-            <div class="d-flex justify-content-between align-items-center p-3 mb-2"
-                 style="background: ${isMe ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255,255,255,0.03)'};
-                        border-left: ${isMe ? '4px solid #6366f1' : 'none'};
-                        border-radius: 8px;">
-                <span class="text-white">
-                    <span class="me-2 text-muted">${i + 1}.</span>
-                    ${name} ${isMe ? '<small class="ms-1 text-primary">⭐ (You)</small>' : ''}
-                </span>
+            <div class="leader-item ${isMe ? 'is-me' : ''} d-flex justify-content-between align-items-center p-3 mb-2 shadow-sm"
+                 style="background: ${isMe ? 'rgba(99, 102, 241, 0.15)' : 'rgba(128, 128, 128, 0.05)'};
+                        border: 1px solid ${isMe ? '#6366f1' : 'rgba(128, 128, 128, 0.1)'};
+                        border-radius: 12px;
+                        color: inherit;">
+                <div class="d-flex align-items-center">
+                    <span class="me-3 fw-bold ${isMe ? 'text-primary' : 'text-muted'}" style="min-width: 25px;">${i + 1}</span>
+                    <span class="fw-medium">
+                        ${name} ${isMe ? '<span class="badge bg-primary ms-1" style="font-size: 0.65rem;">YOU</span>' : ''}
+                    </span>
+                </div>
                 <span class="fw-bold" style="color: #10b981;">${progress}%</span>
             </div>`;
             }).join('');
@@ -2976,13 +3453,13 @@
             video.setAttribute('data-course-id', num); // Syncing ID with backend
 
             const videoPaths = {
-                1: "/images/video/webDevelopment.mp4",
-                2: "/images/video/machine.mp4",
-                3: "/images/video/flutter3.mp4",
-                4: "/images/video/database.mp4",
-                5: "/images/video/security.mp4",
-                6: "/images/video/cloud.mp4",
-                7: "/images/video/react.mp4"
+                1: "/images/video/webDevelopment1.mp4",
+                2: "/images/video/machine1.mp4",
+                3: "/images/video/flutter4.mp4",
+                4: "/images/video/database2.mp4",
+                5: "/images/video/security2.mp4",
+                6: "/images/video/cloud2.mp4",
+                7: "/images/video/cloud2.mp4"
             };
 
             video.src = videoPaths[num] || "/images/video/default.mp4";
@@ -4248,54 +4725,65 @@
     // INITIAL LOAD
     document.addEventListener("DOMContentLoaded", loadNotes);
     // Calendar System
-    document.addEventListener("DOMContentLoaded", renderCalendar);
+    // Calendar System
     let currentDate = new Date();
+
+    // DOMContentLoaded par bhi chalao, par dhyan rahe ID milni chahiye
+    document.addEventListener("DOMContentLoaded", () => {
+        if(document.getElementById('calendarGrid')) {
+            renderCalendar();
+        }
+    });
 
     function renderCalendar() {
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ];
 
-        document.getElementById('currentMonth').textContent =
-            `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        const monthDisplay = document.getElementById('currentMonth');
+        const calendarGrid = document.getElementById('calendarGrid');
+
+        // Safety Check: Agar IDs nahi mili toh error na aaye
+        if (!monthDisplay || !calendarGrid) return;
+
+        monthDisplay.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
 
         const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-        const calendarGrid = document.getElementById('calendarGrid');
         calendarGrid.innerHTML = '';
 
-        // Add day headers
+        // 1. Day Headers
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         days.forEach(day => {
             const dayElement = document.createElement('div');
-            dayElement.className = 'calendar-day fw-bold';
+            dayElement.className = 'calendar-day fw-bold text-primary'; // Added class for color
             dayElement.textContent = day;
             calendarGrid.appendChild(dayElement);
         });
 
-        // Add empty cells for days before the first day of the month
+        // 2. Empty cells
         for (let i = 0; i < firstDay.getDay(); i++) {
             const emptyElement = document.createElement('div');
-            emptyElement.className = 'calendar-day';
+            emptyElement.className = 'calendar-day empty';
             calendarGrid.appendChild(emptyElement);
         }
 
-        // Add days of the month
+        // 3. Dates
+        const today = new Date();
         for (let i = 1; i <= lastDay.getDate(); i++) {
             const dayElement = document.createElement('div');
             dayElement.className = 'calendar-day';
             dayElement.textContent = i;
 
             // Mark today
-            const today = new Date();
             if (i === today.getDate() &&
                 currentDate.getMonth() === today.getMonth() &&
                 currentDate.getFullYear() === today.getFullYear()) {
                 dayElement.classList.add('active');
             }
 
-            // Mark days with events (example: 10th, 15th, 25th)
+            // Mark events
             if ([10, 15, 25].includes(i)) {
                 dayElement.classList.add('has-event');
             }
@@ -4313,7 +4801,21 @@
         currentDate.setMonth(currentDate.getMonth() + 1);
         renderCalendar();
     }
+    function showSection(sectionId) {
+        // Sabhi sections se 'active' class hatao
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
 
+        // Sahi section dikhao
+        const target = document.getElementById(sectionId);
+        if (target) {
+            target.classList.add('active');
+
+            // AGAR CALENDAR HAI TOH USE RENDER KARO
+            if(sectionId === 'calendar') {
+                renderCalendar();
+            }
+        }
+    }
     // Initialize the app
     document.addEventListener('DOMContentLoaded', function() {
         showNotification('🎉 Welcome to StudySmart Pro! All systems ready.');
