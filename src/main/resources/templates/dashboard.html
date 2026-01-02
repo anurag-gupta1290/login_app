@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,6 +129,15 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Images */
+        .course-img {
+            width: 100%;           /* always full width */
+            height: 180px;         /* fixed height for all */
+            object-fit: cover;     /* crop karega, stretch nahi karega */
+            object-position: center; /* image center se crop hogi */
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
 
         /* Cards */
         .card {
@@ -257,14 +267,14 @@
             bottom: 0;
             right: 0;
             background-image: linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.2) 25%,
-                transparent 25%,
-                transparent 50%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.2) 75%,
-                transparent 75%,
-                transparent
+                    -45deg,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.2) 75%,
+                    transparent 75%,
+                    transparent
             );
             z-index: 1;
             background-size: 50px 50px;
@@ -282,33 +292,137 @@
         }
 
         /* Course Cards */
-        .course-card {
-            padding: 0;
-            overflow: hidden;
-            position: relative;
+        /* Course Grid Container – all cards equal height */
+        /* Video Wrapper ko Card ke upar "Full Width" dikhane ke liye */
+        .video-overlay-container {
+            display: none; /* JS se show hoga */
+            position: fixed; /* Screen par fix rahega */
+            top: 50%;
+            left: calc(50% + 125px); /* Sidebar width (250px approx) ka half adjust kiya */
+            transform: translate(-50%, -50%);
+            width: 80%; /* Screen ka 80% area */
+            max-width: 1000px;
+            z-index: 9999;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
         }
 
+        /* Background ko thoda dhundhla (blur) karne ke liye */
+        .video-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 9998;
+        }
+
+        /* Video Tag ki styling */
+        .full-width-video {
+            width: 100% !important;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
+        .course-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 25px;
+            align-items: stretch; /* cards equal height */
+        }
+
+        /* Course Cards */
+        .course-card {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+
+            height: 520px;        /* 🔥 all cards equal */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Top Banner Image */
+        .course-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* If a card uses a colored header instead of an image */
         .course-header {
-            height: 120px;
+            /* Same height as image */
+            height: auto;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             position: relative;
+            width: 100%;
         }
 
+        /* Category Badge */
         .course-category {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--primary);
         }
+        /* Recommended course cards override */
+        .course-card.recommended {
+            height: auto;      /* 🔥 FIX */
+            min-height: 260px;
+            padding: 30px 20px;
+            align-items: center;
+        }
 
+
+        /* Content Section */
         .course-content {
             padding: 25px;
+            flex: 1;                      /* make content grow equally */
+            display: flex;
+            flex-direction: column;
         }
+
+        /* Title */
+        .course-content h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Subtitle */
+        .course-content p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Progress Bar Area */
+        .course-progress {
+            margin-top: auto;            /* keep at bottom */
+        }
+
+        /* Buttons row */
+        .course-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
 
         /* Notification */
         .notification {
@@ -551,6 +665,351 @@
             padding: 25px;
             margin-top: 20px;
         }
+
+        /* NEW STYLES FOR ENHANCED FEATURES */
+
+        /* Pomodoro Timer */
+        .pomodoro-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .pomodoro-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .pomodoro-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pomodoro-btn.active {
+            background: var(--primary);
+        }
+
+        /* Flash Cards */
+        /* Card Container */
+        .flashcard-inner {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        /* Jab is-flipped class add hogi, tab card ghumega */
+        .flashcard-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Front aur Back side ki common styling */
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Peeche ka hissa chhupane ke liye */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Peeche ka side (shuruat mein 180 deg ghuma hua) */
+        .card-back {
+            background-color: #f8f9fa;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+
+        .card-front {
+            background-color: #7c4dff;
+            color: white;
+        }
+        .flashcard {
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .flashcard-back {
+            background: white;
+            color: var(--dark);
+            transform: rotateY(180deg);
+        }
+        /* Video wrapper styling */
+        .video-wrapper {
+            display: none;
+            margin-top: 15px;
+            background: rgba(0,0,0,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .video-wrapper video {
+            border-radius: 8px;
+            max-height: 400px;
+        }
+
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .video-header h6 {
+            color: white;
+            margin: 0;
+        }
+        /* Study Groups */
+        .study-group-card {
+            padding: 20px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .group-members {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .member {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: -10px;
+            border: 2px solid white;
+            font-size: 0.8rem;
+        }
+
+        /* Study Goals */
+        .goal-progress {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .goal-check {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .goal-check.completed {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        /* Notes Section */
+        .notes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .note-card {
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .note-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .note-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .note-card:hover .note-actions {
+            opacity: 1;
+        }
+
+        /* Calendar */
+        .calendar {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            position: relative;
+        }
+        .calendar-day.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--danger);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px;
+        }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        /* Dark theme styles */
+        body.dark-theme {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #f8fafc;
+        }
+
+        body.dark-theme .card {
+            background: rgba(30, 41, 59, 0.9);
+            color: #f8fafc;
+        }
+
+        body.dark-theme .text-muted {
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-theme .btn-outline-primary {
+            color: #cbd5e1;
+            border-color: #cbd5e1;
+        }
+
+        body.dark-theme .btn-outline-primary:hover {
+            background-color: #6366f1;
+            border-color: #6366f1;
+        }
+
+        body.dark-theme .modal-content {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        body.dark-theme .ai-chat-container {
+            background: #334155;
+        }
+
+        body.dark-theme .bot-message {
+            background: #475569;
+            color: #f8fafc;
+        }
+
+        body.dark-theme .user-message {
+            background: #6366f1;
+            color: white;
+        }
+
+        body.dark-theme .note-card {
+            background: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-theme .flashcard-back {
+            background: #334155;
+            color: #f8fafc;
+        }
     </style>
 </head>
 <body>
@@ -592,6 +1051,23 @@
             <i class="fas fa-robot"></i>
             <span>AI Tutor</span>
         </div>
+        <!-- NEW NAVIGATION ITEMS -->
+        <div class="nav-link" onclick="showSection('pomodoro')">
+            <i class="fas fa-clock"></i>
+            <span>Focus Timer</span>
+        </div>
+        <div class="nav-link" onclick="showSection('flashcards')">
+            <i class="fas fa-layer-group"></i>
+            <span>Flash Cards</span>
+        </div>
+        <div class="nav-link" onclick="showSection('notes')">
+            <i class="fas fa-sticky-note"></i>
+            <span>Notes</span>
+        </div>
+        <div class="nav-link" onclick="showSection('calendar')">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Calendar</span>
+        </div>
     </div>
 </div>
 
@@ -607,10 +1083,11 @@
             <div class="user-profile">
                 <div class="profile-img">A</div>
                 <div>
-                    <div class="fw-bold">Anurag Gupta ji</div>
+                    <div class="fw-bold user-name">Loading...</div> <!-- username span -->
                     <small class="text-white-50">Premium Member</small>
                 </div>
             </div>
+
         </div>
 
         <!-- Stats Grid -->
@@ -732,45 +1209,114 @@
                 </div>
             </div>
         </div>
+
+        <!-- NEW: Study Goals -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-bullseye text-danger"></i> Study Goals</h5>
+                <div class="mt-3">
+                    <div class="goal-progress">
+                        <div class="goal-check" onclick="toggleGoal(this)"><i class="fas fa-check"></i></div>
+                        <div>Complete Web Development Module 4</div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="goal-check completed" onclick="toggleGoal(this)"><i class="fas fa-check"></i></div>
+                        <div>Finish Machine Learning Assignment</div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="goal-check" onclick="toggleGoal(this)"><i class="fas fa-check"></i></div>
+                        <div>Study for 2 hours daily</div>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="goal-check" onclick="toggleGoal(this)"><i class="fas fa-check"></i></div>
+                        <div>Complete 5 practice problems</div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary btn-sm mt-3" onclick="addNewGoal()">
+                    <i class="fas fa-plus"></i> Add New Goal
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Smart Courses Section -->
     <div id="courses" class="section">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="text-white"><i class="fas fa-book-open"></i> Smart Courses</h1>
-            <button class="btn btn-custom" onclick="findCourses()">
-                <i class="fas fa-search"></i> Find Courses
-            </button>
+            <h1 class="text-white">
+                <i class="fas fa-book-open"></i> Smart Courses
+            </h1>
+
+            <div class="d-flex align-items-center">
+                <!-- SEARCH INPUT (IMPORTANT) -->
+                <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control me-2"
+                        style="width: 220px;"
+                        placeholder="Search course..."
+                >
+
+                <!-- FIND BUTTON -->
+                <button class="btn btn-custom" onclick="findCourses()">
+                    <i class="fas fa-search"></i> Find Courses
+                </button>
+            </div>
         </div>
 
+
         <div class="row">
+
             <!-- Course 1 -->
             <div class="col-md-4 mb-4">
                 <div class="card course-card">
-                    <div class="course-header">
-                        <div class="course-category">Development</div>
+
+                    <!-- SAME HEADER ADDED (like others) -->
+                    <div class="course-header" style="background: linear-gradient(135deg, #6366f1, #4338ca);">
+                        <div class="course-category">Web Dev</div>
                     </div>
+
+                    <!-- Image -->
+                    <img src="/images/fullStack.png"
+                         alt="Full Stack Web Development"
+                         class="course-img">
+
                     <div class="course-content">
-                        <h5>Full Stack Web Development</h5>
+                        <h5 class="course-title">Full Stack Web Development</h5>
+
                         <p class="text-muted">Master HTML, CSS, JavaScript, React, Node.js, MongoDB</p>
+
                         <div class="progress">
                             <div class="progress-bar" style="width: 65%"></div>
                         </div>
+
                         <div class="d-flex justify-content-between mt-2">
                             <small>65% Complete</small>
                             <small>12/18 Modules</small>
                         </div>
+
                         <div class="d-flex gap-2 mt-3">
-                            <button class="btn btn-custom btn-sm" onclick="continueCourse('Full Stack Web Development')">
+                            <button class="btn btn-custom btn-sm" onclick="continueCourse('Full Stack Web Development',1)">
                                 <i class="fas fa-play"></i> Continue
                             </button>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="showCourseDetails('Full Stack Web Development')">
+                            <button class="btn btn-outline-secondary btn-sm" onclick="showCourseDetails('Full Stack Web Development',this)">
                                 <i class="fas fa-info"></i> Details
                             </button>
                         </div>
+
+                        <!-- NEW: Video Wrapper -->
+                        <div id="commonVideoWrapper1" style="display:none; margin-top:15px;">
+                            <h6 class="text-white">Now Playing</h6>
+                            <video id="courseVideo1" width="100%" controls>
+                                <source id="videoSource1" src="" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button onclick="closeVideo(1)" class="btn btn-sm btn-danger mt-2">Close Video</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
+
 
             <!-- Course 2 -->
             <div class="col-md-4 mb-4">
@@ -778,24 +1324,46 @@
                     <div class="course-header" style="background: linear-gradient(135deg, #10b981, #059669);">
                         <div class="course-category">Data Science</div>
                     </div>
+
+                    <!-- Image -->
+                    <img src="/images/machineLearning.png"
+                         alt="Machine Learning & AI"
+                         class="course-img">
+
                     <div class="course-content">
                         <h5>Machine Learning & AI</h5>
                         <p class="text-muted">Python, TensorFlow, Neural Networks, Data Analysis</p>
+
                         <div class="progress">
                             <div class="progress-bar" style="width: 42%"></div>
                         </div>
+
                         <div class="d-flex justify-content-between mt-2">
                             <small>42% Complete</small>
                             <small>8/19 Modules</small>
                         </div>
+
                         <div class="d-flex gap-2 mt-3">
-                            <button class="btn btn-custom btn-sm" onclick="continueCourse('Machine Learning & AI')">
+                            <button class="btn btn-custom btn-sm" onclick="continueCourse('Machine Learning & AI',2)">
                                 <i class="fas fa-play"></i> Continue
                             </button>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="showCourseDetails('Machine Learning & AI')">
+                            <button class="btn btn-outline-secondary btn-sm" onclick="showCourseDetails('Machine Learning & AI',this)">
                                 <i class="fas fa-info"></i> Details
                             </button>
+
+
                         </div>
+
+                        <!-- NEW: Video Wrapper -->
+                        <div id="commonVideoWrapper2" style="display:none; margin-top:15px;">
+                            <h6 class="text-white">Now Playing</h6>
+                            <video id="courseVideo2" width="100%" controls>
+                                <source id="videoSource2" src="" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button onclick="closeVideo(2)" class="btn btn-sm btn-danger mt-2">Close Video</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -806,73 +1374,264 @@
                     <div class="course-header" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
                         <div class="course-category">Mobile</div>
                     </div>
+
+                    <!-- Image -->
+                    <img src="/images/flutter.png"
+                         alt="Flutter App Development"
+                         class="course-img">
+
                     <div class="course-content">
                         <h5>Flutter App Development</h5>
                         <p class="text-muted">Build cross-platform iOS & Android apps with Dart</p>
+
                         <div class="progress">
                             <div class="progress-bar" style="width: 78%"></div>
                         </div>
+
                         <div class="d-flex justify-content-between mt-2">
                             <small>78% Complete</small>
                             <small>14/18 Modules</small>
                         </div>
+
                         <div class="d-flex gap-2 mt-3">
-                            <button class="btn btn-custom btn-sm" onclick="continueCourse('Flutter App Development')">
+                            <button class="btn btn-custom btn-sm" onclick="continueCourse('Flutter App Development',3)">
                                 <i class="fas fa-play"></i> Continue
                             </button>
-                            <button class="btn btn-outline-secondary btn-sm" onclick="showCourseDetails('Flutter App Development')">
+                            <button class="btn btn-outline-secondary btn-sm" onclick="showCourseDetails('Flutter App Development',this)">
                                 <i class="fas fa-info"></i> Details
                             </button>
+                        </div>
+
+                        <!-- NEW: Video Wrapper -->
+                        <div id="commonVideoWrapper3" style="display:none; margin-top:15px;">
+                            <h6 class="text-white">Now Playing</h6>
+                            <video id="courseVideo3" width="100%" controls>
+                                <source id="videoSource3" src="" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button onclick="closeVideo(3)" class="btn btn-sm btn-danger mt-2">Close Video</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal Section (Single Copy) -->
+        <div id="courseDetailsModal1" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+            <div class="modal-content1" style="background:#fff; padding:20px; border-radius:10px; max-width:700px; width:90%;">
+                <h3 id="courseModalTitle1"></h3>
+                <div id="courseModalContent1" style="margin:10px 0;"></div>
 
-        <!-- New Courses -->
+                <button class="btn btn-custom w-100 mt-3" onclick="closeModal('courseDetailsModal')">Close</button>
+            </div>
+        </div>
+
+
+
+        <!-- Recommended Courses -->
         <h4 class="text-white mt-4 mb-3">Recommended Courses</h4>
         <div class="row">
+            <!-- Course 1: Database Design -->
             <div class="col-md-3 mb-3">
-                <div class="card">
+                <div class="course-card recommended">
                     <div class="card-body text-center">
                         <i class="fas fa-database fa-2x text-primary mb-3"></i>
-                        <h6>Database Design</h6>
-                        <button class="btn btn-outline-primary btn-sm mt-2" onclick="enrollCourse('Database Design')">
-                            Enroll Now
+                        <h6 class="course-title">Database Design</h6>
+
+                        <!-- Enroll Button (Initially visible) -->
+                        <button class="btn btn-outline-primary btn-sm mt-2 enroll-btn"
+                                onclick="enrollCourse('Database Design', this, 4)">
+                            <i class="fas fa-plus-circle"></i> Enroll Now
                         </button>
+
+                        <!-- Continue Button (Initially hidden) -->
+                        <button class="btn btn-custom btn-sm mt-2 continue-btn"
+                                onclick="continueCourse('Database Design', 4)"
+                                style="display: none;">
+                            <i class="fas fa-play"></i> Continue
+                        </button>
+
+                        <!-- Success Message (Hidden initially) -->
+                        <div class="alert alert-success success-msg mt-2 mb-0" style="display: none; padding: 8px 12px;">
+                            <i class="fas fa-check-circle"></i> Enrolled Successfully!
+                        </div>
+                    </div>
+
+
+                    <!-- Video Player -->
+                    <div id="commonVideoWrapper4" style="display:none; margin-top:15px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="text-white mb-0">Now Playing: Database Design</h6>
+                            <button onclick="closeVideo(4)" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                        <video id="courseVideo4" width="100%" controls style="border-radius: 8px;">
+                            <source id="videoSource4" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </div>
+
+            <!-- Course 2: Cyber Security -->
             <div class="col-md-3 mb-3">
-                <div class="card">
+                <div class="course-card recommended">
                     <div class="card-body text-center">
                         <i class="fas fa-shield-alt fa-2x text-success mb-3"></i>
-                        <h6>Cyber Security</h6>
-                        <button class="btn btn-outline-primary btn-sm mt-2" onclick="enrollCourse('Cyber Security')">
-                            Enroll Now
+                        <h6 class="course-title">Cyber Security</h6>
+
+                        <!-- Enroll Button (Initially visible) -->
+                        <button class="btn btn-outline-primary btn-sm mt-2 enroll-btn"
+                                onclick="enrollCourse('Cyber Security', this, 5)">
+                            <i class="fas fa-plus-circle"></i> Enroll Now
                         </button>
+
+                        <!-- Continue Button (Initially hidden) -->
+                        <button class="btn btn-custom btn-sm mt-2 continue-btn"
+                                onclick="continueCourse('Cyber Security',5)"
+                                style="display: none;">
+                            <i class="fas fa-play"></i> Continue
+                        </button>
+
+                        <!-- Success Message (Hidden initially) -->
+                        <div class="alert alert-success success-msg mt-2 mb-0" style="display: none; padding: 8px 12px;">
+                            <i class="fas fa-check-circle"></i> Enrolled Successfully!
+                        </div>
+                    </div>
+
+
+                    <!-- Video Player -->
+                    <div id="commonVideoWrapper5" style="display:none; margin-top:15px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="text-white mb-0">Now Playing: Cyber Security</h6>
+                            <button onclick="closeVideo(5)" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                        <video id="courseVideo5" width="100%" controls style="border-radius: 8px;">
+                            <source id="videoSource5" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </div>
+
+            <!-- Course 3: Cloud Computing -->
             <div class="col-md-3 mb-3">
-                <div class="card">
+                <div class="course-card recommended">
                     <div class="card-body text-center">
                         <i class="fas fa-cloud fa-2x text-info mb-3"></i>
-                        <h6>Cloud Computing</h6>
-                        <button class="btn btn-outline-primary btn-sm mt-2" onclick="enrollCourse('Cloud Computing')">
-                            Enroll Now
+                        <h6 class="course-title">Cloud Computing</h6>
+
+                        <!-- Enroll Button (Initially visible) -->
+                        <button class="btn btn-outline-primary btn-sm mt-2 enroll-btn"
+                                onclick="enrollCourse('Cloud Computing', this, 6)">
+                            <i class="fas fa-plus-circle"></i> Enroll Now
                         </button>
+
+                        <!-- Continue Button (Initially hidden) -->
+                        <button class="btn btn-custom btn-sm mt-2 continue-btn"
+                                onclick="continueCourse('Cloud Computing', 6)"
+                                style="display: none;">
+                            <i class="fas fa-play"></i> Continue
+                        </button>
+
+                        <!-- Success Message (Hidden initially) -->
+                        <div class="alert alert-success success-msg mt-2 mb-0" style="display: none; padding: 8px 12px;">
+                            <i class="fas fa-check-circle"></i> Enrolled Successfully!
+                        </div>
+                    </div>
+
+
+                    <!-- Video Player -->
+                    <div id="commonVideoWrapper6" style="display:none; margin-top:15px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="text-white mb-0">Now Playing: Cloud Computing</h6>
+                            <button onclick="closeVideo(6)" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                        <video id="courseVideo6" width="100%" controls style="border-radius: 8px;">
+                            <source id="videoSource6" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </div>
+
+            <!-- Course 4: React Native -->
             <div class="col-md-3 mb-3">
-                <div class="card">
+                <div class="course-card recommended">
                     <div class="card-body text-center">
                         <i class="fas fa-mobile-alt fa-2x text-warning mb-3"></i>
-                        <h6>React Native</h6>
-                        <button class="btn btn-outline-primary btn-sm mt-2" onclick="enrollCourse('React Native')">
-                            Enroll Now
+                        <h6 class="course-title">React Native</h6>
+
+                        <!-- Enroll Button (Initially visible) -->
+                        <button class="btn btn-outline-primary btn-sm mt-2 enroll-btn"
+                                onclick="enrollCourse('React Native', this, 7)">
+                            <i class="fas fa-plus-circle"></i> Enroll Now
                         </button>
+
+                        <!-- Continue Button (Initially hidden) -->
+                        <button class="btn btn-custom btn-sm mt-2 continue-btn"
+                                onclick="continueCourse('React Native',7)"
+                                style="display: none;">
+                            <i class="fas fa-play"></i> Continue
+                        </button>
+
+                        <!-- Success Message (Hidden initially) -->
+                        <div class="alert alert-success success-msg mt-2 mb-0" style="display: none; padding: 8px 12px;">
+                            <i class="fas fa-check-circle"></i> Enrolled Successfully!
+                        </div>
+                    </div>
+
+
+                    <!-- Video Player -->
+                    <div id="commonVideoWrapper7" style="display:none; margin-top:15px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="text-white mb-0">Now Playing: React Native</h6>
+                            <button onclick="closeVideo(7)" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                        <video id="courseVideo7" width="100%" controls style="border-radius: 8px;">
+                            <source id="videoSource7" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- NEW: Study Groups -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-users text-info"></i> Study Groups</h5>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card study-group-card">
+                            <h6>Web Development Study Group</h6>
+                            <p class="text-muted">Discuss HTML, CSS, JavaScript and frameworks</p>
+                            <div class="group-members">
+                                <div class="member">A</div>
+                                <div class="member">S</div>
+                                <div class="member">R</div>
+                                <div class="member">+5</div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm mt-3">Join Group</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card study-group-card">
+                            <h6>Machine Learning Enthusiasts</h6>
+                            <p class="text-muted">Share resources and solve problems together</p>
+                            <div class="group-members">
+                                <div class="member">M</div>
+                                <div class="member">K</div>
+                                <div class="member">J</div>
+                                <div class="member">+8</div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm mt-3">Join Group</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -929,7 +1688,7 @@
                         <small class="text-success"><i class="fas fa-check"></i> Submitted</small>
                     </div>
                     <div>
-                        <button class="btn btn-outline-success btn-sm" onclick="viewSubmission('Web Development Portfolio')">
+                        <button class="btn btn-custom" onclick="downloadResource('Portfolio.pdf', 'Web Development Portfolio')">
                             <i class="fas fa-download"></i> Download
                         </button>
                     </div>
@@ -938,162 +1697,173 @@
         </div>
     </div>
 
-    <!-- Progress Section -->
+    <!-- Progesss  Section -->
     <div id="progress" class="section">
-        <h1 class="text-white mb-4"><i class="fas fa-chart-line"></i> Learning Progress</h1>
+        <div class="container-fluid">
+            <h1 class="text-white mb-4"><i class="fas fa-chart-line"></i> Learning Progress</h1>
 
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Course Completion Progress</h5>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Full Stack Web Development</span>
-                                <span>65%</span>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title mb-0">Course Completion Progress</h5>
+                                <span class="badge bg-soft-primary text-primary">Live Tracking</span>
                             </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 65%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Machine Learning & AI</span>
-                                <span>42%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 42%"></div>
+
+                            <div id="dynamic-course-list">
+                                <div class="text-center p-5">
+                                    <div class="spinner-border text-primary" role="status"></div>
+                                    <p class="mt-2 text-muted">Fetching your learning data...</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Flutter App Development</span>
-                                <span>78%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 78%"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <h5 class="text-muted">Overall Progress</h5>
+                            <div id="overall-percentage" class="display-3 text-primary fw-bold my-3">0%</div>
+                            <p id="progress-status-msg" class="text-muted px-3">Analyzing your data... 🎯</p>
+
+                            <div class="mt-4">
+                                <button class="btn btn-primary w-100 py-2 mb-2" onclick="loadDashboardData()">
+                                    <i class="fas fa-sync-alt me-2"></i> Refresh Stats
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5>Overall Progress</h5>
-                        <div class="display-4 text-primary fw-bold my-3">84%</div>
-                        <p class="text-muted">You're ahead of schedule! 🎯</p>
-                        <button class="btn btn-custom" onclick="showStudyAnalytics()">
-                            <i class="fas fa-chart-bar"></i> View Analytics
-                        </button>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-clock text-info me-2"></i> Study Time</h5>
+                            <div class="mt-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-muted">This Week</span>
+                                    <span class="fw-bold fs-5">18.5 hours</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Daily Average</span>
+                                    <span class="fw-bold fs-5">2.6 hours</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Study Statistics -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-clock text-info"></i> Study Time</h5>
-                        <div class="mt-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>This Week</span>
-                                <strong>18.5 hours</strong>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Daily Average</span>
-                                <strong>2.6 hours</strong>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Best Day</span>
-                                <strong>4.2 hours (Monday)</strong>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-trophy text-warning me-2"></i> Achievements</h5>
+                            <div id="achievement-container" class="mt-4 d-flex flex-wrap">
+                                <span class="badge bg-info text-dark me-2 mb-2 p-2 px-3"><i class="fas fa-fire me-1"></i> 7-Day Streak</span>
+                                <span class="badge bg-success me-2 mb-2 p-2 px-3"><i class="fas fa-graduation-cap me-1"></i> Course Master</span>
+                                <span class="badge bg-warning text-dark me-2 mb-2 p-2 px-3"><i class="fas fa-star me-1"></i> Top Learner</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-trophy text-warning"></i> Achievements</h5>
-                        <div class="mt-3">
-                            <span class="badge bg-primary me-2 mb-2">7-Day Streak</span>
-                            <span class="badge bg-success me-2 mb-2">Course Master</span>
-                            <span class="badge bg-info me-2 mb-2">Fast Learner</span>
-                            <span class="badge bg-warning me-2 mb-2">Night Owl</span>
-                            <span class="badge bg-danger me-2 mb-2">Perfect Score</span>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4"><i class="fas fa-crown text-warning me-2"></i> Class Leaderboard</h5>
+                            <div id="leaderboard-container">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Resources Section -->
     <div id="resources" class="section">
         <h1 class="text-white mb-4"><i class="fas fa-file-alt"></i> Study Resources</h1>
 
         <div class="card">
             <div class="card-body">
+                <!-- Database Design PDF -->
                 <div class="resource-item d-flex justify-content-between align-items-center p-3 border-bottom">
                     <div class="d-flex align-items-center">
                         <i class="fas fa-file-pdf fa-2x text-danger me-3"></i>
                         <div>
-                            <h5 class="mb-1">HTML & CSS Complete Guide</h5>
-                            <p class="text-muted mb-0">Comprehensive guide for web development beginners</p>
+                            <h5 class="mb-1">Database Design Guide</h5>
+                            <p class="text-muted mb-0">SQL and NoSQL database design best practices</p>
+                            <small class="text-info">
+                                <i class="fas fa-hdd"></i> 2.4 MB •
+                                <i class="fas fa-file"></i> Database_Design.pdf
+                            </small>
                         </div>
                     </div>
-                    <button class="btn btn-custom" onclick="downloadResource('HTML & CSS Complete Guide')">
+                    <button class="btn btn-custom" onclick="downloadResource('Database_Design.pdf', 'Database Design Guide')">
                         <i class="fas fa-download"></i> Download
                     </button>
                 </div>
 
+                <!-- HTML/CSS PDF -->
                 <div class="resource-item d-flex justify-content-between align-items-center p-3 border-bottom">
                     <div class="d-flex align-items-center">
                         <i class="fas fa-file-pdf fa-2x text-primary me-3"></i>
                         <div>
-                            <h5 class="mb-1">Python Programming Handbook</h5>
-                            <p class="text-muted mb-0">From basics to advanced Python concepts</p>
+                            <h5 class="mb-1">HTML & CSS Mastery</h5>
+                            <p class="text-muted mb-0">Complete guide for web development beginners</p>
+                            <small class="text-info">
+                                <i class="fas fa-hdd"></i> 3.1 MB •
+                                <i class="fas fa-file"></i> Html.css.pdf
+                            </small>
                         </div>
                     </div>
-                    <button class="btn btn-custom" onclick="downloadResource('Python Programming Handbook')">
+                    <button class="btn btn-custom" onclick="downloadResource('Html.css.pdf', 'HTML & CSS Mastery')">
                         <i class="fas fa-download"></i> Download
                     </button>
                 </div>
 
+                <!-- Machine Learning PDF -->
                 <div class="resource-item d-flex justify-content-between align-items-center p-3 border-bottom">
                     <div class="d-flex align-items-center">
                         <i class="fas fa-file-pdf fa-2x text-success me-3"></i>
                         <div>
-                            <h5 class="mb-1">Machine Learning Notes</h5>
+                            <h5 class="mb-1">Machine Learning Basics</h5>
                             <p class="text-muted mb-0">Algorithms, implementations, and best practices</p>
+                            <small class="text-info">
+                                <i class="fas fa-hdd"></i> 4.7 MB •
+                                <i class="fas fa-file"></i> MachineLearning.pdf
+                            </small>
                         </div>
                     </div>
-                    <button class="btn btn-custom" onclick="downloadResource('Machine Learning Notes')">
+                    <button class="btn btn-custom" onclick="downloadResource('MachineLearning.pdf', 'Machine Learning Basics')">
                         <i class="fas fa-download"></i> Download
                     </button>
                 </div>
 
+                <!-- Python Notes PDF -->
                 <div class="resource-item d-flex justify-content-between align-items-center p-3">
                     <div class="d-flex align-items-center">
                         <i class="fas fa-file-pdf fa-2x text-warning me-3"></i>
                         <div>
-                            <h5 class="mb-1">Database Design Patterns</h5>
-                            <p class="text-muted mb-0">SQL and NoSQL database design best practices</p>
+                            <h5 class="mb-1">Python Programming</h5>
+                            <p class="text-muted mb-0">From basics to advanced Python concepts</p>
+                            <small class="text-info">
+                                <i class="fas fa-hdd"></i> 2.8 MB •
+                                <i class="fas fa-file"></i> Python_Notes.pdf
+                            </small>
                         </div>
                     </div>
-                    <button class="btn btn-custom" onclick="downloadResource('Database Design Patterns')">
+                    <button class="btn btn-custom" onclick="downloadResource('Python_Notes.pdf', 'Python Programming')">
                         <i class="fas fa-download"></i> Download
                     </button>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- AI Tutor Section -->
     <div id="ai-tutor" class="section">
         <h1 class="text-white mb-4"><i class="fas fa-robot"></i> AI Study Assistant</h1>
@@ -1139,6 +1909,201 @@
             </div>
         </div>
     </div>
+
+    <!-- NEW: Pomodoro Timer Section -->
+    <div id="pomodoro" class="section">
+        <h1 class="text-white mb-4"><i class="fas fa-clock"></i> Focus Timer</h1>
+
+        <div class="pomodoro-container glass">
+            <h5 class="text-white"><i class="fas fa-stopwatch"></i> Pomodoro Timer</h5>
+            <div class="pomodoro-options">
+                <button class="pomodoro-btn active" onclick="setPomodoroTime(25)">Pomodoro (25min)</button>
+                <button class="pomodoro-btn" onclick="setPomodoroTime(5)">Short Break (5min)</button>
+                <button class="pomodoro-btn" onclick="setPomodoroTime(15)">Long Break (15min)</button>
+            </div>
+            <div class="timer-display" id="pomodoroDisplay">25:00</div>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-success" onclick="startPomodoroTimer()">
+                    <i class="fas fa-play"></i> Start
+                </button>
+                <button class="btn btn-danger" onclick="stopPomodoroTimer()">
+                    <i class="fas fa-stop"></i> Stop
+                </button>
+                <button class="btn btn-warning" onclick="resetPomodoroTimer()">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-chart-pie text-primary"></i> Focus Sessions Today</h5>
+                <div class="row mt-3 text-center">
+                    <div class="col-md-4">
+                        <div class="display-6 text-primary">3</div>
+                        <small class="text-muted">Completed Sessions</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="display-6 text-success">75min</div>
+                        <small class="text-muted">Total Focus Time</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="display-6 text-warning">25min</div>
+                        <small class="text-muted">Current Streak</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FLASH CARDS SECTION ===== -->
+    <div id="flashcards" class="section">
+
+        <h2 class="text-white mb-4">
+            <i class="fas fa-layer-group"></i> Flash Cards
+        </h2>
+
+        <div class="row">
+
+            <!-- CREATE FLASH CARD -->
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
+                        <h5>Create Flash Card</h5>
+
+                        <textarea id="cardFront" class="form-control mb-2"
+                                  placeholder="Enter Question"></textarea>
+
+                        <textarea id="cardBack" class="form-control mb-3"
+                                  placeholder="Enter Answer"></textarea>
+
+                        <button class="btn btn-primary w-100" onclick="createFlashcard()">
+                            <i class="fas fa-plus"></i> Add Card
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLASH CARD LIST -->
+            <div class="col-md-7">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5>Your Cards</h5>
+                        <div id="flashcardsContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PRACTICE MODE -->
+        <div class="card mt-4 shadow-sm">
+            <div class="card-body text-center">
+
+                <h5>Practice</h5>
+
+                <div class="flashcard" onclick="flipCard()" id="practiceCard">
+                    <div class="flashcard-inner" id="practiceInner">
+                        <div class="flashcard-front" id="practiceFront">
+                            Click to Start : What is HTML ?
+                        </div>
+                        <div class="flashcard-back" id="practiceBack">
+                            Answer : Hyper Text Markup Language.
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="mt-3">
+                    <button class="btn btn-secondary me-2" onclick="previousCard()">Previous</button>
+                    <button class="btn btn-success" onclick="nextCard()">Next</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- NEW: Notes Section -->
+    <div id="notes" class="section">
+        <h1 class="text-white mb-4"><i class="fas fa-sticky-note"></i> Notes</h1>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Create New Note</h5>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="noteTitle" placeholder="Note Title">
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" id="noteContent" rows="5" placeholder="Start typing your note here..."></textarea>
+                </div>
+                <button class="btn btn-custom" onclick="createNote()">
+                    <i class="fas fa-save"></i> Save Note
+                </button>
+            </div>
+        </div>
+
+        <div class="notes-container" id="notesContainer">
+            <!-- Notes will be added here -->
+        </div>
+    </div>
+
+    <!-- NEW: Calendar Section -->
+    <div id="calendar" class="section">
+        <h1 class="text-white mb-4"><i class="fas fa-calendar-alt"></i> Study Calendar</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <button class="btn btn-sm btn-outline-primary" onclick="previousMonth()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h5 id="currentMonth">October 2025</h5>
+                        <button class="btn btn-sm btn-outline-primary" onclick="nextMonth()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar days will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Upcoming Events</h5>
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                        <div>
+                            <h6 class="mb-1">Web Development Exam</h6>
+                            <small class="text-muted">October 25, 2026 - 10:00 AM</small>
+                        </div>
+                        <span class="badge bg-danger">Exam</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                        <div>
+                            <h6 class="mb-1">Machine Learning Project Due</h6>
+                            <small class="text-muted">October 28, 2026 - 11:59 PM</small>
+                        </div>
+                        <span class="badge bg-warning">Assignment</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3">
+                        <div>
+                            <h6 class="mb-1">Study Group Meeting</h6>
+                            <small class="text-muted">October 30, 2026 - 3:00 PM</small>
+                        </div>
+                        <span class="badge bg-info">Meeting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Floating Action Button -->
@@ -1166,6 +2131,10 @@
                 <button class="btn btn-warning flex-fill" onclick="endStudySession()">
                     <i class="fas fa-stop"></i> End
                 </button>
+                <audio id="alarmSound">
+                    <source src="/images/video/alram.mp3" type="audio/mpeg">
+                </audio>
+
             </div>
         </div>
     </div>
@@ -1232,6 +2201,26 @@
             document.getElementById('sidebar').classList.remove('active');
         }
     }
+    // Example: username comes from backend API or session
+    // Let's say you have it in a JS variable
+    let username = "Guest"; // default
+
+    // If username comes from backend (Spring Boot session or REST API)
+    fetch("/api/user/profile") // make your endpoint to get user info
+        .then(res => res.json())
+        .then(data => {
+            username = data.username; // backend returns {username: "Anurag Gupta"}
+            updateDashboardUsername(username);
+        })
+        .catch(err => console.log("Failed to load username:", err));
+
+    function updateDashboardUsername(name) {
+        const userNameDiv = document.querySelector(".user-name");
+        if (userNameDiv) {
+            userNameDiv.textContent = name + " ji"; // optional honorific
+        }
+    }
+
 
     // Notification System
     function showNotification(message) {
@@ -1258,15 +2247,44 @@
     function closeModal(modalId) {
         document.getElementById(modalId).classList.remove('active');
     }
-
+    const courseVideos = {
+        'Full Stack Web Development': '/video/fullstack.mp4',
+        'Machine Learning & AI': '/video/ml.mp4',
+        'Flutter App Development': '/video/flutter.mp4'
+    };
     // Course Functions - FULLY WORKING
     function continueCourse(courseName) {
-        showNotification(`🚀 Starting "${courseName}"... Opening learning interface!`);
-        // Simulate loading
+        showNotification(`🚀 Starting "${courseName}"... Loading video...`);
+
         setTimeout(() => {
-            showNotification(`✅ "${courseName}" loaded successfully! Enjoy learning!`);
-        }, 1500);
+            const videoUrl = courseVideos[courseName];
+
+            if (videoUrl) {
+
+                // Set modal title
+                document.getElementById('courseModalTitle').textContent = courseName;
+
+                // Set modal content
+                document.getElementById('courseModalContent').innerHTML = `
+                <video width="100%" controls autoplay style="border-radius: 10px;">
+                    <source src="/videos/flutter.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <p class="mt-3 text-white">
+                    <strong>Now Playing:</strong> ${courseName}
+                </p>
+            `;
+
+                // Open modal
+                showModal('courseDetailsModal');
+
+            } else {
+                showNotification(`⚠️ No video found for "${courseName}".`);
+            }
+        }, 1000);
     }
+
 
     function showCourseDetails(courseName) {
         const courseData = {
@@ -1274,22 +2292,25 @@
                 description: 'Complete web development course covering frontend and backend technologies.',
                 modules: '18 modules',
                 duration: '120 hours',
-                instructor: 'Sarah Johnson',
-                rating: '4.8/5'
+                instructor: 'Shardha Khapra',
+                rating: '4.8/5',
+                video:'flutter1.mp4'
             },
             'Machine Learning & AI': {
                 description: 'Comprehensive AI and machine learning course with hands-on projects.',
                 modules: '19 modules',
                 duration: '95 hours',
                 instructor: 'Dr. Alex Chen',
-                rating: '4.9/5'
+                rating: '4.9/5',
+                video:'flutter1.mp4'
             },
             'Flutter App Development': {
                 description: 'Build beautiful cross-platform mobile applications with Flutter.',
                 modules: '18 modules',
                 duration: '80 hours',
                 instructor: 'Mike Thompson',
-                rating: '4.7/5'
+                rating: '4.7/5',
+                video:'flutter1.mp4'
             }
         };
 
@@ -1298,7 +2319,8 @@
             modules: '15 modules',
             duration: '75 hours',
             instructor: 'Expert Instructor',
-            rating: '4.5/5'
+            rating: '4.5/5',
+            video:'flutter1.mp4'
         };
 
         document.getElementById('courseModalTitle').textContent = courseName;
@@ -1314,71 +2336,672 @@
         `;
         showModal('courseDetailsModal');
     }
-
     function enrollCourse(courseName) {
         showNotification(`📚 Enrolling in "${courseName}"...`);
-        setTimeout(() => {
-            showNotification(`🎉 Successfully enrolled in "${courseName}"! Check your courses.`);
-        }, 2000);
-    }
 
-    function findCourses() {
-        showNotification(`🔍 Searching for new courses...`);
         setTimeout(() => {
-            showNotification(`📖 Found 12 new courses matching your interests!`);
-        }, 1500);
-    }
+            showNotification(`🎉 Successfully enrolled in "${courseName}"! Added to My Courses.`);
 
-    // Assignment Functions - FULLY WORKING
-    function submitAssignment(assignmentName) {
-        showNotification(`📤 Submitting "${assignmentName}"...`);
-        setTimeout(() => {
-            showNotification(`✅ "${assignmentName}" submitted successfully! Good job!`);
-        }, 2000);
-    }
+            const courseContainer = document.getElementById("myCourses");
 
-    function viewAssignment(assignmentName) {
-        document.getElementById('assignmentModalTitle').textContent = assignmentName;
-        document.getElementById('assignmentModalContent').innerHTML = `
-            <p><strong>Description:</strong> Detailed project requirements and specifications.</p>
-            <p><strong>Due Date:</strong> ${new Date(Date.now() + 86400000).toLocaleDateString()}</p>
-            <p><strong>Points:</strong> 100</p>
-            <p><strong>Status:</strong> <span class="badge bg-warning">In Progress</span></p>
-            <div class="mt-3">
-                <textarea class="form-control" rows="4" placeholder="Add your submission notes here..."></textarea>
-                <button class="btn btn-success w-100 mt-2" onclick="submitAssignment('${assignmentName}')">
-                    <i class="fas fa-paper-plane"></i> Submit Assignment
-                </button>
+            // Course images aur details
+            const courseData = {
+                "Database Design": {
+                    img: "/images/database.png",
+                    description: "Learn database concepts, design ER diagrams, and write SQL queries.",
+                    modules: 12,
+                    video: "/video/video2.mp4"
+                },
+                "Cyber Security": {
+                    img: "/images/cybersecurity.png",
+                    description: "Understand cybersecurity fundamentals, threats, and prevention methods.",
+                    modules: 10,
+                    video: "/video/flutter1.mp4"
+                },
+                "Cloud Computing": {
+                    img: "/images/cloud.png",
+                    description: "Explore cloud services, deployment models, and hands-on exercises.",
+                    modules: 8,
+                    video: "/video/flutter1.mp4"
+                },
+                "React Native": {
+                    img: "/images/react.png",
+                    description: "Build cross-platform mobile apps using React Native and Expo.",
+                    modules: 15,
+                    video: "/video/webDevelopment.mp4"
+                }
+            };
+
+            const data = courseData[courseName] || {
+                img: "/images/default.png",
+                description: "No description available.",
+                modules: 10
+            };
+
+            const card = document.createElement("div");
+            card.className = "col-md-4 mb-4";
+            card.innerHTML = `
+            <div class="card course-card">
+                <img src="${data.img}" class="course-img" alt="${courseName}">
+                <div class="course-content">
+                    <h5>${courseName}</h5>
+                    <p class="text-muted">${data.description}</p>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 0%"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-2">
+                        <small>0% Complete</small>
+                        <small>0/${data.modules} Modules</small>
+                    </div>
+
+                    <button class="btn btn-custom btn-sm mt-3" onclick="continueCourse('${courseName}')">
+                        <i class="fas fa-play"></i> Continue
+                    </button>
+                </div>
             </div>
         `;
-        showModal('assignmentModal');
-    }
 
-    function workOnAssignment(assignmentName) {
-        showNotification(`💻 Opening "${assignmentName}" workspace...`);
-        setTimeout(() => {
-            showNotification(`🚀 Workspace ready! Start coding your assignment.`);
+            courseContainer.appendChild(card);
+
         }, 1500);
     }
 
-    function viewSubmission(assignmentName) {
-        showNotification(`📥 Downloading "${assignmentName}" submission file...`);
+    // Updated continueCourse function
+    function continueCourse(courseName, btn, wrapperNum) {
+        const courseVideos = {
+            "Full Stack Web Development": "/images/video/webDevelopment.mp4",
+            "Machine Learning & AI": "/images/video/video2.mp4",
+            "Flutter App Development": "/images/video/flutter1.mp4",
+            "Database Design": "/images/video/database.mp4",
+            "Cyber Security": "/images/video/security.mp4",
+            "Cloud Computing": "/images/video/cloud.mp4",
+            "React Native": "/images/video/webDevelopment.mp4"
+        };
+
+        const videoPath = courseVideos[courseName];
+        if (!videoPath) {
+            alert("Video not found!");
+            return;
+        }
+
+        // Use the wrapper number to select correct elements
+        const wrapper = document.getElementById("commonVideoWrapper" + wrapperNum);
+        const video = document.getElementById("courseVideo" + wrapperNum);
+        const source = document.getElementById("videoSource" + wrapperNum);
+
+        source.src = videoPath;
+        video.load();
+        video.play();
+        wrapper.style.display = "block";
+
+        // Scroll video into view
+        wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    // Updated closeVideo function
+    function closeVideo(wrapperNum) {
+        const wrapper = document.getElementById("commonVideoWrapper" + wrapperNum);
+        if (!wrapper) return;
+
+        const video = document.getElementById("courseVideo" + wrapperNum);
+        video.pause();
+        video.currentTime = 0;
+        wrapper.style.display = "none";
+    }
+    // Enroll Course Function - Yeh add karna hai
+    function enrollCourse(courseName, button, wrapperNum) {
+        // Hide enroll button
+        button.style.display = "none";
+
+        // Find parent card-body
+        const cardBody = button.closest('.card-body');
+
+        // Show continue button
+        const continueBtn = cardBody.querySelector('.continue-btn');
+        continueBtn.style.display = "block";
+
+        // Show success message
+        const successMsg = cardBody.querySelector('.success-msg');
+        successMsg.style.display = "block";
+
+        // Hide success message after 2 seconds
         setTimeout(() => {
-            showNotification(`✅ Submission downloaded successfully!`);
+            successMsg.style.display = "none";
+        }, 2000);
+
+        // Save enrollment status to localStorage
+        let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || {};
+        enrolledCourses[courseName] = {
+            enrolled: true,
+            progress: 0,
+            lastWatched: new Date().toISOString()
+        };
+        localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+
+        // Start the course immediately (optional)
+        // continueCourse(courseName, wrapperNum);
+    }
+
+    // Updated continueCourse function - FIXED VERSION
+    function continueCourse(courseName, wrapperNum) {
+        const courseVideos = {
+            "Full Stack Web Development": "/images/video/webDevelopment.mp4",
+            "Machine Learning & AI": "/images/video/machine.mp4",
+            "Flutter App Development": "/images/video/flutter3.mp4",
+            "Database Design": "/images/video/database.mp4",
+            "Cyber Security": "/images/video/security.mp4",
+            "Cloud Computing": "/images/video/cloud.mp4",
+            "React Native": "/images/video/react.mp4"
+        };
+
+        const videoPath = courseVideos[courseName];
+        if (!videoPath) {
+            alert("Video not found!");
+            return;
+        }
+
+        // Use the wrapper number to select correct elements
+        const wrapper = document.getElementById("commonVideoWrapper" + wrapperNum);
+        const video = document.getElementById("courseVideo" + wrapperNum);
+        const source = document.getElementById("videoSource" + wrapperNum);
+
+        // Check if video is already loaded
+        if (source.src.includes(videoPath)) {
+            // Video already loaded, just play it
+            wrapper.style.display = "block";
+            video.play();
+        } else {
+            // Load new video
+            source.src = videoPath;
+            video.load();
+            wrapper.style.display = "block";
+            video.play().catch(error => {
+                console.log("Auto-play prevented:", error);
+            });
+        }
+
+        // Scroll video into view
+        wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Update progress in localStorage
+        updateCourseProgress(courseName);
+    }
+
+    // Function to update course progress
+    function updateCourseProgress(courseName) {
+        let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || {};
+        if (enrolledCourses[courseName]) {
+            // Increment progress by 5% each time video is watched
+            enrolledCourses[courseName].progress = Math.min(
+                (enrolledCourses[courseName].progress || 0) + 5,
+                100
+            );
+            enrolledCourses[courseName].lastWatched = new Date().toISOString();
+            localStorage.setItem('enrolledCourses', JSON.stringify(enrolledCourses));
+        }
+    }
+
+    // Updated closeVideo function - IMPROVED
+    function closeVideo(wrapperNum) {
+        const wrapper = document.getElementById("commonVideoWrapper" + wrapperNum);
+        if (!wrapper) return;
+
+        const video = document.getElementById("courseVideo" + wrapperNum);
+        video.pause();
+        wrapper.style.display = "none";
+    }
+
+    // Function to check enrollment status on page load
+    function checkEnrollmentStatus() {
+        let enrolledCourses = JSON.parse(localStorage.getItem('enrolledCourses')) || {};
+
+        // For Recommended Courses section (wrapperNum 4-7)
+        for (let i = 4; i <= 7; i++) {
+            const wrapper = document.getElementById("commonVideoWrapper" + i);
+            if (wrapper) {
+                const cardBody = wrapper.previousElementSibling.querySelector('.card-body');
+                if (cardBody) {
+                    const courseTitle = cardBody.querySelector('.course-title').textContent;
+
+                    if (enrolledCourses[courseTitle]) {
+                        // Hide enroll button
+                        const enrollBtn = cardBody.querySelector('.enroll-btn');
+                        if (enrollBtn) enrollBtn.style.display = "none";
+
+                        // Show continue button
+                        const continueBtn = cardBody.querySelector('.continue-btn');
+                        if (continueBtn) continueBtn.style.display = "block";
+                    }
+                }
+            }
+        }
+    }
+
+    // Add this to your page load/ready event
+    document.addEventListener('DOMContentLoaded', function() {
+        checkEnrollmentStatus();
+    });
+
+    function findCourses() {
+        const keyword = document.getElementById("searchInput").value.toLowerCase();
+        const courses = document.querySelectorAll(".course-card");
+
+        let foundCount = 0;
+
+        courses.forEach(course => {
+            const title = course.querySelector(".course-title").innerText.toLowerCase();
+
+            if (title.includes(keyword)) {
+                course.style.display = "block";
+                foundCount++;
+            } else {
+                course.style.display = "none";
+            }
+        });
+
+        if (foundCount > 0) {
+            showNotification(`📖 Found ${foundCount} matching courses!`);
+        } else {
+            showNotification("❌ Course not found!");
+        }
+    }
+
+
+    // Notification function
+    function showNotification(message) {
+        const box = document.createElement("div");
+        box.className = "notification-box";
+        box.innerHTML = message;
+
+        document.body.appendChild(box);
+
+        // Show with animation
+        setTimeout(() => box.classList.add("show"), 100);
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+            box.classList.remove("show");
+            setTimeout(() => box.remove(), 500);
+        }, 3000);
+    }
+
+    // Add click listeners to all "Join Group" buttons dynamically
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".study-group-card button").forEach(button => {
+            button.addEventListener("click", function() {
+                const groupName = this.closest(".study-group-card").querySelector("h6").innerText;
+
+                // Create notification div
+                const notification = document.createElement("div");
+                notification.innerText = `🎉 You have successfully joined the "${groupName}" group!`;
+                notification.style.position = "fixed";
+                notification.style.bottom = "20px";
+                notification.style.right = "20px";
+                notification.style.backgroundColor = "#4caf50";
+                notification.style.color = "#fff";
+                notification.style.padding = "10px 20px";
+                notification.style.borderRadius = "8px";
+                notification.style.boxShadow = "0 4px 6px rgba(0,0,0,0.2)";
+                notification.style.zIndex = "1000";
+                notification.style.opacity = "0";
+                notification.style.transition = "opacity 0.5s ease";
+
+                document.body.appendChild(notification);
+
+                // Fade in
+                requestAnimationFrame(() => {
+                    notification.style.opacity = "1";
+                });
+
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.opacity = "0";
+                    notification.addEventListener("transitionend", () => notification.remove());
+                }, 3000);
+            });
+        });
+    });
+
+
+
+    // ------------------------------
+    // GLOBAL UTILITY FUNCTIONS
+    // ------------------------------
+    function showNotification(message) {
+        const box = document.createElement("div");
+        box.className = "notification-box";
+        box.innerHTML = message;
+
+        document.body.appendChild(box);
+
+        setTimeout(() => {
+            box.classList.add("show");
+        }, 100);
+
+        setTimeout(() => {
+            box.classList.remove("show");
+            setTimeout(() => box.remove(), 500);
+        }, 2500);
+    }
+
+    function showModal(id) {
+        document.getElementById(id).classList.add("active");
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.remove("active");
+    }
+
+    // ------------------------------
+    // ASSIGNMENT ACTION FUNCTIONS
+    // ------------------------------
+    function submitAssignment(name) {
+        showNotification(`📤 Submitting "${name}"...`);
+        setTimeout(() => {
+            showNotification(`✅ "${name}" submitted successfully!`);
         }, 1500);
+    }
+
+    function viewAssignment(name) {
+        const modalTitle = document.getElementById("assignmentModalTitle");
+        const modalContent = document.getElementById("assignmentModalContent");
+
+        modalTitle.textContent = name;
+        modalContent.innerHTML = `
+        <p><strong>Description:</strong> Auto-generated project details.</p>
+        <p><strong>Due Date:</strong> ${new Date(Date.now() + 86400000).toLocaleDateString()}</p>
+        <p><strong>Points:</strong> 100</p>
+        <p><strong>Status:</strong> <span class="badge bg-warning">In Progress</span></p>
+
+        <div class="mt-3">
+            <textarea class="form-control" rows="4" placeholder="Write notes..."></textarea>
+            <button class="btn btn-success w-100 mt-2" data-action="submit" data-name="${name}">
+                <i class="fas fa-paper-plane"></i> Submit Assignment
+            </button>
+        </div>
+    `;
+
+        showModal("assignmentModal");
+    }
+
+    function workOnAssignment(name) {
+        showNotification(`💻 Opening workspace for "${name}"...`);
+        setTimeout(() => {
+            showNotification(`🚀 Workspace ready! Start working.`);
+        }, 1200);
+    }
+
+    function viewSubmission(name) {
+        showNotification(`📥 Downloading "${name}"...`);
+        setTimeout(() => {
+            showNotification(`✅ Download complete!`);
+        }, 1200);
     }
 
     function createNewAssignment() {
-        showNotification(`🆕 Creating new assignment...`);
+        showNotification(`🆕 Generating new assignment...`);
         setTimeout(() => {
-            showNotification(`📝 New assignment template ready! Start adding details.`);
-        }, 1500);
+            showNotification(`📝 New assignment is ready!`);
+        }, 1200);
     }
 
-    // Resource Functions - FULLY WORKING
+    // --------------------------------------
+    // DYNAMIC BUTTON EVENT HANDLER (MAGIC)
+    // --------------------------------------
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
+
+        const action = btn.getAttribute("data-action");
+        const name = btn.getAttribute("data-name") || "Untitled Assignment";
+
+        const actionMap = {
+            "view": () => viewAssignment(name),
+            "submit": () => submitAssignment(name),
+            "work": () => workOnAssignment(name),
+            "download": () => viewSubmission(name),
+            "new": () => createNewAssignment()
+        };
+
+        if (actionMap[action]) actionMap[action]();
+    });
+    // ==========================================
+    // PROGRESS SECTION - 4 (COMPLETE FIXED CODE)
+    // ==========================================
+
+    /**
+     * Smart Study Pro: A to Z Interactive System
+     * Handles: User Session, Video Tracking, Progress & Leaderboard
+     */
+    // ==========================================
+    // PROGRESS SECTION - FINAL UPDATED CODE
+    // ==========================================
+
+    /**
+     * Smart Study Pro: A to Z Interactive System
+     * Features: Session, Video Tracking, Dynamic Course List & Overall Progress
+     */
+
+    // ======================================================
+    // SMART STUDY PRO: COMPLETE A-Z PROGRESS MODULE
+    // ======================================================
+
+    /**
+     * Global Configuration
+     * API_BASE_URL: Backend endpoint for progress
+     * loggedInUser: Stores session data
+     */
+    let loggedInUser = { id: null, username: "Learner" };
+    const API_BASE_URL = "http://localhost:8089/api/progress";
+
+    // --- 1. INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', async () => {
+        console.log("🚀 System Initializing...");
+
+        // User session load karein
+        const success = await initializeUserSession();
+
+        if (success) {
+            setupVideoTracking();    // Video listeners set karein
+            loadDashboardData();     // Individual & Overall stats load karein
+            loadLeaderboard();       // Global ranking load karein
+        } else {
+            console.error("❌ Auth Error: User session not found.");
+        }
+    });
+
+    // --- 2. SESSION MANAGEMENT ---
+    async function initializeUserSession() {
+        try {
+            const response = await fetch('/auth/me');
+            if (!response.ok) return false;
+
+            const data = await response.json();
+            loggedInUser.id = data.id;
+            loggedInUser.username = data.username;
+
+            console.log(`✅ Welcome back, ${loggedInUser.username}`);
+            return true;
+        } catch (err) {
+            console.error("Session Fetch Error:", err);
+            return false;
+        }
+    }
+
+    // --- 3. VIDEO TRACKING LOGIC ---
+    function setupVideoTracking() {
+        // Sabhi course videos (1-7) par event listener lagana
+        for (let i = 1; i <= 7; i++) {
+            const video = document.getElementById(`courseVideo${i}`);
+            if (!video) continue;
+
+            // Jab video khatam ho
+            video.onended = async function() {
+                const courseId = video.getAttribute('data-course-id');
+                if (!courseId) return;
+
+                try {
+                    // Backend call to update progress in DB
+                    const response = await fetch(`${API_BASE_URL}/update?userId=${loggedInUser.id}&courseId=${courseId}`, {
+                        method: 'POST'
+                    });
+
+                    if (response.ok) {
+                        // Professional Success Message
+                        alert(`Congratulations, ${loggedInUser.username}! 🎉 \nYou have successfully completed this module. Your progress has been updated by +10%! 🎯`);
+
+                        // UI Refresh karein bina page reload kiye
+                        await Promise.all([loadDashboardData(), loadLeaderboard()]);
+                    }
+                } catch (err) {
+                    console.error("Progress Update Failed:", err);
+                }
+            };
+        }
+    }
+
+    // --- 4. DASHBOARD & OVERALL PROGRESS CALCULATION ---
+    async function loadDashboardData() {
+        const container = document.getElementById('dynamic-course-list');
+        const overallText = document.getElementById('overall-percentage'); // Aapki ID: overall-percentage
+        const statusMsg = document.getElementById('progress-status-msg');   // Aapki ID: progress-status-msg
+
+        if (!container || !loggedInUser.id) return;
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/user/${loggedInUser.id}`);
+            const courses = await res.json();
+
+            container.innerHTML = '';
+            let totalPercentage = 0;
+
+            if (!courses || courses.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No progress data found. Watch videos to start!</div>';
+                if (overallText) overallText.innerText = "0%";
+                return;
+            }
+
+            // Individual Course Bars banayein
+            courses.forEach(c => {
+                const name = c.courseName || "Course";
+                const pct = Math.round(c.progressPercentage || 0);
+                totalPercentage += pct;
+
+                container.innerHTML += `
+            <div class="mb-4 p-3 shadow-sm" style="background: #1e293b; border-radius: 15px; border: 1px solid #334155;">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-white fw-bold"><i class="fas fa-graduation-cap me-2 text-primary"></i>${name}</span>
+                    <span class="badge bg-success rounded-pill px-3">${pct}%</span>
+                </div>
+                <div class="progress" style="height: 12px; background: #0f172a; border-radius: 10px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                         role="progressbar"
+                         style="width: ${pct}%; background: linear-gradient(90deg, #6366f1, #a855f7);"
+                         aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+            </div>`;
+            });
+
+            // --- MATH: OVERALL PROGRESS ---
+            const average = Math.round(totalPercentage / courses.length);
+
+            // UI Update: Overall Percentage
+            if (overallText) {
+                overallText.innerText = `${average}%`;
+            }
+
+            // UI Update: Dynamic Status Message
+            if (statusMsg) {
+                if (average === 0) statusMsg.innerText = "Start your first module today! 🎯";
+                else if (average < 50) statusMsg.innerText = "Good start! You are making progress. 🚀";
+                else if (average < 100) statusMsg.innerText = "Doing great! Almost there! 🔥";
+                else statusMsg.innerText = "Master! You have completed everything! 🏆";
+            }
+
+        } catch (e) {
+            console.error("Dashboard Load Error:", e);
+            container.innerHTML = '<div class="alert alert-danger">Error fetching dashboard data.</div>';
+        }
+    }
+
+    //5. Leaderboard
+    async function loadLeaderboard() {
+        const lb = document.getElementById('leaderboard-container');
+        if (!lb) return;
+
+        try {
+            const res = await fetch(`/api/progress/leaderboard`);
+            const data = await res.json();
+
+            console.log("Leaderboard Live Data:", data); // Check if keys are 'username' and 'progress'
+
+            if (!data || data.length === 0) {
+                lb.innerHTML = '<div class="text-muted p-3 text-center">No data available.</div>';
+                return;
+            }
+
+            lb.innerHTML = data.map((item, i) => {
+                // Controller ke Map keys use karein
+                const name = item.username || "Learner";
+                const progressValue = item.progress || 0;
+                const progress = parseFloat(progressValue).toFixed(1);
+
+                const isMe = (name === loggedInUser.username);
+
+                return `
+            <div class="d-flex justify-content-between align-items-center p-3 mb-2"
+                 style="background: ${isMe ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255,255,255,0.03)'};
+                        border-left: ${isMe ? '4px solid #6366f1' : 'none'};
+                        border-radius: 8px;">
+                <span class="text-white">
+                    <span class="me-2 text-muted">${i + 1}.</span>
+                    ${name} ${isMe ? '<small class="ms-1 text-primary">⭐ (You)</small>' : ''}
+                </span>
+                <span class="fw-bold" style="color: #10b981;">${progress}%</span>
+            </div>`;
+            }).join('');
+        } catch (e) {
+            console.error("Leaderboard UI Error:", e);
+        }
+    }
+    // --- 6. VIDEO PLAYER CONTROLS ---
+    window.continueCourse = function(courseTitle, num) {
+        const video = document.getElementById(`courseVideo${num}`);
+        const wrapper = document.getElementById(`commonVideoWrapper${num}`);
+
+        if (video && wrapper) {
+            wrapper.style.display = 'block';
+            video.setAttribute('data-course-id', num); // Syncing ID with backend
+
+            const videoPaths = {
+                1: "/images/video/webDevelopment.mp4",
+                2: "/images/video/machine.mp4",
+                3: "/images/video/flutter3.mp4",
+                4: "/images/video/database.mp4",
+                5: "/images/video/security.mp4",
+                6: "/images/video/cloud.mp4",
+                7: "/images/video/react.mp4"
+            };
+
+            video.src = videoPaths[num] || "/images/video/default.mp4";
+            video.load();
+            video.play();
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
+    window.closeVideo = function(num) {
+        const wrapper = document.getElementById(`commonVideoWrapper${num}`);
+        const video = document.getElementById(`courseVideo${num}`);
+        if (wrapper) wrapper.style.display = 'none';
+        if (video) video.pause();
+    };
+    // ✅Resources  CORRECT VERSION - FULLY WORKING
     function downloadResource(resourceName) {
-        showNotification(`📥 Downloading "${resourceName}"...`);
-        // Simulate download progress
+        showNotification(`📥 Starting download: "${resourceName}"...`);
+
         let progress = 0;
         const interval = setInterval(() => {
             progress += 20;
@@ -1386,6 +3009,17 @@
 
             if (progress >= 100) {
                 clearInterval(interval);
+
+                // ✅ CORRECT PATH FOR SPRING BOOT
+                const link = document.createElement('a');
+                link.href = `/notes1/${resourceName}`;  // ✅ Only this!
+                link.download = resourceName;
+                link.style.display = 'none';
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
                 setTimeout(() => {
                     showNotification(`✅ "${resourceName}" downloaded successfully!`);
                 }, 500);
@@ -1502,64 +3136,664 @@
         document.getElementById('timerDisplay').textContent =
             `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
+    // ==================== REAL AI INTEGRATION ====================
 
-    // AI Tutor Functions - FULLY WORKING
-    function askAI() {
-        const question = document.getElementById('aiQuestion').value;
-        if (question.trim()) {
-            // Add user message to chat
-            const chatContainer = document.getElementById('aiChat');
-            const userMessage = document.createElement('div');
-            userMessage.className = 'ai-message user-message';
-            userMessage.innerHTML = `<strong>You:</strong> ${question}`;
-            chatContainer.appendChild(userMessage);
+    // AI Provider Configuration
+    const AI_CONFIG = {
+        // Choose your preferred AI provider (uncomment one)
+        provider: 'backend', // 'gemini', 'openai', 'huggingface', or 'mock'
+    }
+    // AI Tutor Memory System
+    const aiMemory = {
+        conversationHistory: [],
+        context: {
+            userLevel: 'intermediate',
+            learningStyle: 'visual',
+            currentTopics: ['Web Development', 'Machine Learning'],
+            previousQuestions: []
+        },
+        maxHistory: 10
+    };
 
-            showNotification(`🤖 AI is thinking about your question...`);
-            document.getElementById('aiQuestion').value = '';
+    // Fix for missing function
+    function useEnhancedMockAI() {
+        console.log("Using enhanced mock AI");
+        return true;
+    }
 
-            // Show loading indicator
-            const loadingMessage = document.createElement('div');
-            loadingMessage.className = 'ai-message bot-message';
-            loadingMessage.innerHTML = `<strong>AI Tutor:</strong> <span class="loader"></span> Thinking...`;
-            chatContainer.appendChild(loadingMessage);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+    // Initialize AI Tutor
+    async function initializeAITutor() {
+        showNotification('🤖 AI Tutor initializing...');
 
-            // Simulate AI response
-            setTimeout(() => {
-                // Remove loading message
-                loadingMessage.remove();
+        try {
+            // Check API connectivity
+            const isConnected = await checkAIConnectivity();
 
-                // Add AI response
-                const botMessage = document.createElement('div');
-                botMessage.className = 'ai-message bot-message';
-
-                const responses = [
-                    `Great question! "${question}" is an important concept. Let me break it down for you...`,
-                    `I'd be happy to help with "${question}". Here's a detailed explanation with examples...`,
-                    `That's an excellent question about "${question}". Let me provide you with a comprehensive answer...`,
-                    `I understand you're asking about "${question}". This is a fundamental concept that's crucial for your learning...`
-                ];
-
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                botMessage.innerHTML = `<strong>AI Tutor:</strong> ${randomResponse}`;
-                chatContainer.appendChild(botMessage);
-
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-                showNotification('✅ AI Tutor provided an answer!');
-            }, 2000);
+            if (isConnected) {
+                document.querySelector('#ai-tutor .card-title').innerHTML +=
+                    ' <span class="badge bg-success">Live AI</span>';
+                showNotification('✅ Real AI Tutor connected successfully!');
+            } else {
+                showNotification('⚠️ Using enhanced mock AI');
+                // Initialize mock AI
+            }
+        } catch (error) {
+            console.error('AI initialization error:', error);
+            // Fallback to mock AI
         }
     }
 
+    // Check AI API Connectivity
+    async function checkAIConnectivity() {
+        const provider = AI_CONFIG.provider;
+
+        // Check if API key is configured
+        if (!AI_CONFIG[provider]?.apiKey || AI_CONFIG[provider].apiKey.includes('YourAPIKey')) {
+            return false;
+        }
+
+        try {
+            // Simple test query
+            const testResult = await callRealAI('Hello');
+            return testResult && testResult.length > 0;
+        } catch (error) {
+            console.warn(`AI API (${provider}) not available:`, error.message);
+            return false;
+        }
+    }
+
+    // Main AI Function with Real AI Integration
+    async function askAI() {
+        const questionInput = document.getElementById('aiQuestion');
+        const question = questionInput.value.trim();
+
+        if (!question) return;
+
+        const chatContainer = document.getElementById('aiChat');
+
+        // Add user message
+        const userMessage = document.createElement('div');
+        userMessage.className = 'ai-message user-message';
+        userMessage.innerHTML = `<strong>You:</strong> ${question}`;
+        chatContainer.appendChild(userMessage);
+
+        // Clear input
+        questionInput.value = '';
+
+        // Show thinking indicator
+        const thinkingMessage = document.createElement('div');
+        thinkingMessage.className = 'ai-message bot-message';
+        thinkingMessage.innerHTML = `
+        <strong>AI Tutor:</strong>
+        <span class="loader"></span>
+        <small class="text-muted">Analyzing your question...</small>
+    `;
+        chatContainer.appendChild(thinkingMessage);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        // Add to memory
+        aiMemory.conversationHistory.push({
+            role: 'user',
+            content: question,
+            timestamp: new Date().toISOString()
+        });
+
+        // Trim history if needed
+        if (aiMemory.conversationHistory.length > aiMemory.maxHistory) {
+            aiMemory.conversationHistory = aiMemory.conversationHistory.slice(-aiMemory.maxHistory);
+        }
+
+        try {
+            let aiResponse;
+
+            // Try real AI first (simplified check)
+            const provider = AI_CONFIG.provider;
+            if (provider === 'gemini' && AI_CONFIG.gemini.apiKey && !AI_CONFIG.gemini.apiKey.includes('YourAPIKey')) {
+                aiResponse = await callGeminiAI(question);
+            } else {
+                // Fallback to enhanced mock AI
+                aiResponse = await callEnhancedMockAI(question);
+            }
+
+            // Remove thinking message
+            thinkingMessage.remove();
+
+            // Add AI response
+            const botMessage = document.createElement('div');
+            botMessage.className = 'ai-message bot-message';
+            botMessage.innerHTML = `<strong>AI Tutor:</strong> ${formatAIResponse(aiResponse)}`;
+            chatContainer.appendChild(botMessage);
+
+            // Add to memory
+            aiMemory.conversationHistory.push({
+                role: 'assistant',
+                content: aiResponse,
+                timestamp: new Date().toISOString()
+            });
+
+            // Update context
+            updateLearningContext(question, aiResponse);
+
+            // Show success
+            showNotification('✅ AI Tutor provided a detailed answer!');
+
+            // Auto-scroll
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        } catch (error) {
+            console.error('AI Error:', error);
+
+            // Remove thinking message
+            thinkingMessage.remove();
+
+            // Show error response
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'ai-message bot-message';
+            errorMessage.innerHTML = `
+            <strong>AI Tutor:</strong>
+            <span class="text-danger">I'm having trouble connecting. Here's what I can tell you:</span><br>
+            ${getFallbackResponse(question)}
+        `;
+            chatContainer.appendChild(errorMessage);
+
+            showNotification('⚠️ Using fallback AI response');
+        }
+    }
+
+    // Call Real AI API (Google Gemini)
+    async function callRealAI(question) {
+        const provider = AI_CONFIG.provider;
+
+        switch (provider) {
+            case 'gemini':
+                return await callGeminiAI(question);
+            case 'openai':
+                return await callOpenAI(question);
+            case 'huggingface':
+                return await callHuggingFaceAI(question);
+            default:
+                return await callEnhancedMockAI(question);
+        }
+    }
+
+    // Google Gemini AI Integration (SIMPLIFIED VERSION)
+    async function callGeminiAI(question) {
+        try {
+            const apiKey = AI_CONFIG.gemini.apiKey;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+
+            console.log('Calling Gemini API with key:', apiKey.substring(0, 10) + '...');
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `You are an AI study tutor. Help the student with this question: ${question}.
+                        Provide detailed, educational, and helpful response. Include examples if relevant.`
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 800,
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Gemini API error response:', errorText);
+                throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
+            }
+
+            const data = await response.json();
+
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                return data.candidates[0].content.parts[0].text;
+            } else {
+                throw new Error('Unexpected response format from Gemini API');
+            }
+
+        } catch (error) {
+            console.error('Gemini API Error:', error);
+            // Fallback to mock AI
+            return await callEnhancedMockAI(question);
+        }
+    }
+
+    // OpenAI ChatGPT Integration
+    async function callOpenAI(question) {
+        try {
+            const response = await fetch(AI_CONFIG.openai.url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AI_CONFIG.openai.apiKey}`
+                },
+                body: JSON.stringify({
+                    model: AI_CONFIG.openai.model,
+                    messages: [
+                        {
+                            role: "system",
+                            content: `You are an AI study tutor. Be helpful, detailed, and educational.`
+                        },
+                        {
+                            role: "user",
+                            content: question
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 500
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`OpenAI API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+
+        } catch (error) {
+            console.error('OpenAI API Error:', error);
+            throw error;
+        }
+    }
+
+    // Hugging Face Integration
+    async function callHuggingFaceAI(question) {
+        try {
+            const response = await fetch(AI_CONFIG.huggingface.url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${AI_CONFIG.huggingface.apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    inputs: `As an AI tutor, answer this study question: ${question}`,
+                    parameters: {
+                        max_length: 200,
+                        temperature: 0.7
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Hugging Face API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return Array.isArray(data) ? data[0].generated_text : data.generated_text;
+
+        } catch (error) {
+            console.error('Hugging Face API Error:', error);
+            throw error;
+        }
+    }
+
+    // Enhanced Mock AI (Fallback with better responses)
+    async function callEnhancedMockAI(question) {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 800));
+
+        // Analyze question for better responses
+        const questionAnalysis = analyzeQuestion(question);
+
+        // Generate contextual response
+        const responses = {
+            programming: [
+                `For **${question}**, here's a detailed explanation:\n\n` +
+                `**Concept:** This is an important programming concept that forms the foundation of many applications.\n` +
+                `**Example Code:** \`\`\`javascript\n// Practical example\nfunction demonstrate() {\n  console.log("Understanding ${questionAnalysis.topic || 'programming'} concepts");\n}\`\`\`\n` +
+                `**Best Practice:** Always write clean, well-documented code and follow industry standards.`,
+
+                `Great question about **${questionAnalysis.topic || 'programming'}**! Let me explain step by step:\n\n` +
+                `1. **Basic Concept:** Start with the fundamental principles\n` +
+                `2. **Implementation:** How to apply it in real projects\n` +
+                `3. **Common Pitfalls:** Things developers often get wrong\n` +
+                `4. **Advanced Usage:** Tips for experienced programmers\n\n` +
+                `Would you like me to elaborate on any specific aspect?`
+            ],
+
+            theory: [
+                `Regarding **${question}**, here's the theoretical foundation:\n\n` +
+                `**Key Principles:** \n• Fundamental principle 1\n• Core concept 2\n• Important theory 3\n\n` +
+                `**Real-World Applications:** Where this theory is practically used\n` +
+                `**Related Concepts:** Connected ideas you should explore next`,
+
+                `That's an excellent theoretical question! Let me break it down:\n\n` +
+                `**Definition:** Clear explanation of what "${question}" means\n` +
+                `**Historical Context:** How this concept evolved over time\n` +
+                `**Importance:** Why it matters in modern technology\n` +
+                `**Practical Examples:** How it's applied in real scenarios`
+            ],
+
+            general: [
+                `I'd be happy to help with **${question}**! As your AI study tutor, here's my advice:\n\n` +
+                `• **Study Strategy:** Break complex topics into smaller, manageable parts\n` +
+                `• **Learning Resources:** Check our resources section for detailed materials\n` +
+                `• **Practice Approach:** Regular hands-on exercises are crucial\n` +
+                `• **Revision Technique:** Systematic review helps long-term retention`,
+
+                `Thanks for asking about **${question}**! This is crucial for your learning journey. Here's a structured approach:\n\n` +
+                `**Step-by-Step Learning Path:**\n1. Start with basic concepts\n2. Practice with simple examples\n3. Build small projects\n4. Seek feedback and iterate\n5. Teach others to reinforce learning\n\n` +
+                `Need more specific guidance? Feel free to ask follow-up questions!`
+            ]
+        };
+
+        const category = questionAnalysis.category || 'general';
+        const categoryResponses = responses[category] || responses.general;
+
+        return categoryResponses[Math.floor(Math.random() * categoryResponses.length)];
+    }
+
+    // Analyze question for better context
+    function analyzeQuestion(question) {
+        const lowerQuestion = question.toLowerCase();
+
+        const analysis = {
+            category: 'general',
+            topic: null,
+            complexity: 'medium'
+        };
+
+        // Detect category
+        if (lowerQuestion.includes('code') || lowerQuestion.includes('program') ||
+            lowerQuestion.includes('javascript') || lowerQuestion.includes('python') ||
+            lowerQuestion.includes('html') || lowerQuestion.includes('css') ||
+            lowerQuestion.includes('function') || lowerQuestion.includes('variable') ||
+            lowerQuestion.includes('api') || lowerQuestion.includes('database')) {
+            analysis.category = 'programming';
+        } else if (lowerQuestion.includes('theory') || lowerQuestion.includes('concept') ||
+            lowerQuestion.includes('explain') || lowerQuestion.includes('define') ||
+            lowerQuestion.includes('what is') || lowerQuestion.includes('how does')) {
+            analysis.category = 'theory';
+        }
+
+        // Detect topic
+        const topics = {
+            'web development': ['html', 'css', 'javascript', 'react', 'node', 'frontend', 'backend'],
+            'machine learning': ['ml', 'ai', 'neural', 'model', 'training', 'dataset'],
+            'databases': ['sql', 'database', 'query', 'mongodb', 'mysql'],
+            'algorithms': ['algorithm', 'sort', 'search', 'complexity', 'data structure']
+        };
+
+        for (const [topic, keywords] of Object.entries(topics)) {
+            if (keywords.some(keyword => lowerQuestion.includes(keyword))) {
+                analysis.topic = topic;
+                break;
+            }
+        }
+
+        // Detect complexity
+        const wordCount = question.split(' ').length;
+        if (wordCount > 15 || lowerQuestion.includes('advanced') || lowerQuestion.includes('complex')) {
+            analysis.complexity = 'high';
+        } else if (wordCount < 5) {
+            analysis.complexity = 'low';
+        }
+
+        return analysis;
+    }
+
+    // Build learning context
+    function buildLearningContext(question) {
+        const analysis = analyzeQuestion(question);
+
+        let context = `The student is asking about ${analysis.topic || 'a study topic'}. `;
+        context += `Question complexity: ${analysis.complexity}. `;
+
+        // Add recent topics if available
+        if (aiMemory.context.previousQuestions.length > 0) {
+            context += `Recently asked about: ${aiMemory.context.previousQuestions.slice(-3).join(', ')}. `;
+        }
+
+        // Add study suggestions
+        if (analysis.category === 'programming') {
+            context += `Suggest practical coding examples and best practices.`;
+        } else if (analysis.category === 'theory') {
+            context += `Provide clear definitions and real-world applications.`;
+        } else {
+            context += `Offer structured guidance and study tips.`;
+        }
+
+        return context;
+    }
+
+    // Update learning context
+    function updateLearningContext(question, response) {
+        // Add to previous questions
+        aiMemory.context.previousQuestions.push(question.substring(0, 50) + '...');
+        if (aiMemory.context.previousQuestions.length > 5) {
+            aiMemory.context.previousQuestions.shift();
+        }
+
+        // Detect learning level from question
+        const analysis = analyzeQuestion(question);
+        if (analysis.complexity === 'high' && aiMemory.context.userLevel === 'beginner') {
+            aiMemory.context.userLevel = 'intermediate';
+        }
+
+        // Detect topic from response
+        const topics = ['Web Development', 'Machine Learning', 'Databases', 'Algorithms'];
+        topics.forEach(topic => {
+            if (response.toLowerCase().includes(topic.toLowerCase()) &&
+                !aiMemory.context.currentTopics.includes(topic)) {
+                aiMemory.context.currentTopics.push(topic);
+            }
+        });
+    }
+
+    // Format AI response for better display
+    function formatAIResponse(response) {
+        if (!response) return "No response received from AI.";
+
+        // Convert markdown-like formatting to HTML
+        let formatted = response
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>')
+            .replace(/```(\w+)?\n([\s\S]*?)\n```/g, '<pre><code class="language-$1">$2</code></pre>')
+            .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+        // Add paragraph tags
+        formatted = `<p>${formatted}</p>`;
+
+        return formatted;
+    }
+
+    // Get fallback response
+    function getFallbackResponse(question) {
+        const fallbacks = [
+            `Based on common study materials, <strong>"${question}"</strong> relates to important concepts that you should focus on. ` +
+            `I recommend checking the course materials and practicing related exercises.`,
+
+            `For <strong>"${question}"</strong>, many students find it helpful to:<br>
+        1. Review basic concepts first<br>
+        2. Look at practical examples<br>
+        3. Try hands-on practice<br>
+        4. Ask for specific help when stuck`,
+
+            `While I can't access real-time AI right now, I can tell you that <strong>"${question}"</strong> is a great question! ` +
+            `It shows you're thinking deeply about your studies. Check our resources section for detailed materials.`
+        ];
+
+        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    }
+
+    // Quick question function
     function quickQuestion(question) {
         document.getElementById('aiQuestion').value = question;
         askAI();
     }
 
+    // Handle Enter key
     function handleKeyPress(event) {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
             askAI();
         }
     }
+
+    // AI Tutor Features Menu
+    function showAIFeatures() {
+        const aiSidebar = document.querySelector('#ai-tutor .col-md-4');
+        if (aiSidebar && !document.querySelector('.ai-features-menu')) {
+            const features = `
+        <div class="card mb-3 ai-features-menu">
+            <div class="card-body">
+                <h6><i class="fas fa-cogs text-primary"></i> AI Features</h6>
+                <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="summarizeConversation()">
+                    <i class="fas fa-file-contract"></i> Summarize Chat
+                </button>
+                <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="generateStudyPlan()">
+                    <i class="fas fa-calendar-check"></i> Create Study Plan
+                </button>
+                <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="explainCode()">
+                    <i class="fas fa-code"></i> Explain Code
+                </button>
+                <button class="btn btn-sm btn-outline-success w-100" onclick="startVoiceInput()">
+                    <i class="fas fa-microphone"></i> Voice Input
+                </button>
+            </div>
+        </div>
+    `;
+            aiSidebar.innerHTML += features;
+        }
+    }
+
+    // Summarize conversation
+    async function summarizeConversation() {
+        if (aiMemory.conversationHistory.length === 0) {
+            showNotification('No conversation to summarize');
+            return;
+        }
+
+        const summaryPrompt = `Summarize this study conversation in 3 key points:\n\n` +
+            aiMemory.conversationHistory.map(msg => `${msg.role}: ${msg.content}`).join('\n');
+
+        document.getElementById('aiQuestion').value = summaryPrompt;
+        askAI();
+    }
+
+    // Generate study plan
+    function generateStudyPlan() {
+        const planPrompt = `Create a 7-day study plan for ${aiMemory.context.currentTopics[0] || 'web development'} ` +
+            `for a ${aiMemory.context.userLevel} level student with ${aiMemory.context.learningStyle} learning style. ` +
+            `Include daily topics, exercises, and goals.`;
+
+        document.getElementById('aiQuestion').value = planPrompt;
+        askAI();
+    }
+
+    // Explain code
+    function explainCode() {
+        const codePrompt = `Explain this code snippet step by step:\n\n` +
+            `[Paste your code here]\n\n` +
+            `Focus on: 1) What it does, 2) How it works, 3) Key concepts, 4) Best practices`;
+
+        document.getElementById('aiQuestion').value = codePrompt;
+        showNotification('📝 Paste your code in the input box and ask!');
+    }
+
+    // Clear chat history
+    function clearAIChat() {
+        const chatContainer = document.getElementById('aiChat');
+        chatContainer.innerHTML = `
+        <div class="ai-message bot-message">
+            <strong>AI Tutor:</strong> Hello! I'm your AI study assistant. Ask me anything about your courses, assignments, or concepts you're struggling with!
+        </div>
+    `;
+
+        // Reset memory
+        aiMemory.conversationHistory = [];
+        showNotification('🗑️ Chat history cleared');
+    }
+
+    // Export conversation
+    function exportConversation() {
+        if (aiMemory.conversationHistory.length === 0) {
+            showNotification('No conversation to export');
+            return;
+        }
+
+        const conversation = aiMemory.conversationHistory.map(msg =>
+            `${msg.role.toUpperCase()}: ${msg.content}\nTimestamp: ${new Date(msg.timestamp).toLocaleString()}`
+        ).join('\n\n');
+
+        const blob = new Blob([conversation], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `study-conversation-${new Date().toISOString().split('T')[0]}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showNotification('💾 Conversation exported successfully!');
+    }
+
+
+
+    // Voice input feature
+    function startVoiceInput() {
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('aiQuestion').value = transcript;
+                showNotification('🎤 Voice input captured! Press Enter or click Ask.');
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event.error);
+                showNotification('🎤 Voice input failed. Please type instead.');
+            };
+
+            recognition.start();
+            showNotification('🎤 Listening... Speak your question now.');
+        } else {
+            showNotification('🎤 Voice input not supported in this browser.');
+        }
+    }
+
+    // Initialize AI when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeAITutor();
+
+        // Small delay to ensure DOM is ready
+        setTimeout(showAIFeatures, 500);
+
+        // Add AI controls to chat interface
+        const aiChatContainer = document.querySelector('#aiChat')?.parentElement;
+        if (aiChatContainer && !aiChatContainer.querySelector('.ai-controls')) {
+            const aiControls = `
+            <div class="d-flex justify-content-between mt-2 ai-controls">
+                <button class="btn btn-sm btn-outline-secondary" onclick="clearAIChat()">
+                    <i class="fas fa-trash"></i> Clear
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="exportConversation()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <button class="btn btn-sm btn-outline-info" onclick="startVoiceInput()">
+                    <i class="fas fa-microphone"></i> Voice
+                </button>
+            </div>
+        `;
+            aiChatContainer.innerHTML += aiControls;
+        }
+    });
 
     // Theme Toggle
     function toggleTheme() {
@@ -1593,45 +3827,549 @@
         });
     });
 
+    // NEW FEATURES IMPLEMENTATION
+
+    // Study Goals
+    function toggleGoal(element) {
+        element.classList.toggle('completed');
+        if (element.classList.contains('completed')) {
+            showNotification('🎯 Goal completed! Great job!');
+        }
+    }
+
+    function addNewGoal() {
+        const goalText = prompt('Enter your new study goal:');
+        if (goalText) {
+            const goalsContainer = document.querySelector('.card-body .mt-3');
+            const newGoal = document.createElement('div');
+            newGoal.className = 'goal-progress';
+            newGoal.innerHTML = `
+                <div class="goal-check" onclick="toggleGoal(this)"><i class="fas fa-check"></i></div>
+                <div>${goalText}</div>
+            `;
+            goalsContainer.appendChild(newGoal);
+            showNotification('🎯 New study goal added!');
+        }
+    }
+
+    // ================= POMODORO TIMER =================
+
+    let pomodoroInterval = null;
+    let pomodoroSeconds = 25 * 60;
+    let currentMode = "pomodoro";
+
+    // ---------------- AUDIO ----------------
+    function playAlarm() {
+        const alarm = document.getElementById("alarmSound");
+        if (!alarm) return;
+
+        alarm.currentTime = 0;
+        alarm.play().catch(err => {
+            console.log("Audio blocked by browser:", err);
+        });
+    }
+
+    // ---------------- MODE SET ----------------
+    function setPomodoroTime(minutes, event) {
+        stopAlarm();
+
+        // active button
+        document.querySelectorAll(".pomodoro-btn").forEach(btn => {
+            btn.classList.remove("active");
+        });
+        if (event) event.target.classList.add("active");
+
+        if (minutes === 25) {
+            currentMode = "pomodoro";
+        } else if (minutes === 5) {
+            currentMode = "shortBreak";
+        } else {
+            currentMode = "longBreak";
+        }
+
+        pomodoroSeconds = minutes * 60;
+        updatePomodoroDisplay();
+
+        showNotification(
+            `⏰ ${minutes}-minute ${currentMode === "pomodoro" ? "focus session" : "break"} set`
+        );
+    }
+    //PomodoroTimer
+    // ---------------- START ----------------
+    function startPomodoroTimer() {
+        if (pomodoroInterval) return;
+
+        pomodoroInterval = setInterval(() => {
+            pomodoroSeconds--;
+            updatePomodoroDisplay();
+
+            if (pomodoroSeconds <= 0) {
+                clearInterval(pomodoroInterval);
+                pomodoroInterval = null;
+
+                playAlarm(); // 🔔 ALARM HERE
+
+                if (currentMode === "pomodoro") {
+                    showNotification("🎉 Focus session completed! Time for a break.");
+                } else {
+                    showNotification("🔄 Break over! Ready for another focus session?");
+                }
+            }
+        }, 1000);
+
+        showNotification(
+            `⏰ ${currentMode === "pomodoro" ? "Focus" : "Break"} timer started!`
+        );
+    }
+    function stopAlarm() {
+        const alarm = document.getElementById("alarmSound");
+        if (!alarm) return;
+
+        alarm.pause();        // sound stop
+        alarm.currentTime = 0; // reset to start
+    }
+
+
+    // ---------------- STOP ----------------
+    function stopPomodoroTimer() {
+        clearInterval(pomodoroInterval);
+        pomodoroInterval = null;
+        stopAlarm();
+        showNotification("⏸️ Timer stopped.");
+    }
+
+    // ---------------- RESET ----------------
+    function resetPomodoroTimer() {
+        clearInterval(pomodoroInterval);
+        pomodoroInterval = null;
+        stopAlarm();
+
+        if (currentMode === "pomodoro") {
+            pomodoroSeconds = 25 * 60;
+        } else if (currentMode === "shortBreak") {
+            pomodoroSeconds = 5 * 60;
+        } else {
+            pomodoroSeconds = 15 * 60;
+        }
+
+        updatePomodoroDisplay();
+        showNotification("🔄 Timer reset!");
+    }
+
+    // ---------------- DISPLAY ----------------
+    function updatePomodoroDisplay() {
+        const minutes = Math.floor(pomodoroSeconds / 60);
+        const seconds = pomodoroSeconds % 60;
+
+        document.getElementById("pomodoroDisplay").textContent =
+            `${minutes.toString().padStart(2, "0")}:${seconds
+                .toString()
+                .padStart(2, "0")}`;
+    }
+    // flash card
+
+    /**
+     * FLASHCARD APP - COMPLETE LOGIC
+     */
+
+// 1. GLOBAL SETTINGS & STATE
+// localStorage se userId lega, agar nahi mili to default 1 use karega
+    let userId = localStorage.getItem("activeUser") || 1;
+    let currentCards = [];      // API se aaye hue saare cards yahan store honge
+    let currentIndex = 0;       // Practice mode mein kaunsa card dikh raha hai
+    let practiceRandom = false; // Random mode on/off
+
+    // 2. INITIALIZATION
+    // Jab page load hoga tab data fetch hoga
+    document.addEventListener("DOMContentLoaded", loadFlashcards);
+
+    // 3. API DATA HANDLING (CRUD)
+    function loadFlashcards() {
+        fetch(`/api/flashcards/${userId}`)
+            .then(res => res.json())
+            .then(data => {
+                currentCards = data;
+                renderAllFlashcards(); // Neeche ki list update karega
+
+                // Practice area mein pehla card dikhayega
+                if (currentCards.length > 0) {
+                    updatePracticeCard(0);
+                } else {
+                    setEmptyState();
+                }
+            })
+            .catch(err => console.error("Error fetching cards:", err));
+    }
+
+    function createFlashcard() {
+        const front = document.getElementById("cardFront").value;
+        const back = document.getElementById("cardBack").value;
+
+        if (!front || !back) {
+            alert("Please enter both question and answer.");
+            return;
+        }
+
+        fetch("/api/flashcards", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                question: front,
+                answer: back,
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(() => {
+                loadFlashcards(); // List refresh karein
+                document.getElementById("cardFront").value = "";
+                document.getElementById("cardBack").value = "";
+            });
+    }
+
+    function deleteFlashcard(id) {
+        if (!confirm("Are you sure you want to delete this card?")) return;
+
+        fetch(`/api/flashcards/${id}`, { method: "DELETE" })
+            .then(() => loadFlashcards());
+    }
+
+    // 4. UI RENDERING (LIST VIEW)
+    function renderAllFlashcards() {
+        let container = document.getElementById("flashcardsContainer");
+        if (!container) return;
+
+        container.innerHTML = "";
+        currentCards.forEach(card => {
+            container.innerHTML += `
+        <div class="border p-2 mb-2 d-flex justify-content-between align-items-center bg-dark text-white rounded">
+            <div>
+                <b>Q: ${card.question}</b>
+                <p class="mb-0 text-secondary">A: ${card.answer}</p>
+            </div>
+            <button onclick="deleteFlashcard(${card.id})" class="btn btn-sm btn-danger">
+                Delete
+            </button>
+        </div>`;
+        });
+    }
+
+    // 5. PRACTICE MODE LOGIC (THE PURPLE CARD)
+    function updatePracticeCard(index) {
+        if (currentCards.length === 0) return;
+
+        const cardInner = document.querySelector('.flashcard-inner');
+
+        // Naya card aane se pehle flip reset karein
+        if (cardInner) cardInner.classList.remove('is-flipped');
+
+        // Content change (thoda delay taaki animation smooth lage)
+        setTimeout(() => {
+            const frontText = document.getElementById("practiceFront");
+            const backText = document.getElementById("practiceBack");
+
+            if (frontText) frontText.innerText = currentCards[index].question;
+            if (backText) backText.innerText = currentCards[index].answer;
+
+            currentIndex = index;
+        }, 150);
+    }
+
+    function nextCard() {
+        if (currentCards.length === 0) return;
+
+        if (practiceRandom) {
+            let randomIndex = Math.floor(Math.random() * currentCards.length);
+            updatePracticeCard(randomIndex);
+        } else {
+            currentIndex = (currentIndex + 1) % currentCards.length;
+            updatePracticeCard(currentIndex);
+        }
+    }
+
+    function prevCard() {
+        if (currentCards.length === 0) return;
+        currentIndex = (currentIndex - 1 + currentCards.length) % currentCards.length;
+        updatePracticeCard(currentIndex);
+    }
+
+    // 6. ANIMATION & TOGGLES
+    function flipCard() {
+        const cardInner = document.querySelector('.flashcard-inner');
+        if (cardInner) {
+            cardInner.classList.toggle('is-flipped');
+        }
+    }
+
+    function toggleRandomPractice() {
+        practiceRandom = !practiceRandom;
+        const statusText = practiceRandom ? "🎲 Random mode ON" : "➡️ Sequential mode ON";
+
+        // Agar aapke paas notification system hai to wahan dikhayein, warna alert
+        if (typeof showNotification === "function") {
+            showNotification(statusText);
+        } else {
+            alert(statusText);
+        }
+    }
+
+    function clearAllFlashcards() {
+        if (!confirm("Are you sure you want to delete all flashcards?")) return;
+
+        // Note: Yahan server-side API call (DELETE all) honi chahiye
+        // For UI purposes:
+        currentCards = [];
+        renderAllFlashcards();
+        setEmptyState();
+    }
+
+    function setEmptyState() {
+        const frontText = document.getElementById("practiceFront");
+        if (frontText) frontText.innerText = "No cards available. Add some below!";
+    }
+    /**************** NOTES (SPRING BOOT + DB) ****************/
+
+    /**************** NOTES (SPRING BOOT + DB) ****************/
+
+        // 1. Pehle ensure karein ki userId storage mein hai
+// Agar login ke baad set nahi kiya hai, to test ke liye '1' uthayega
+    let activeUserId = localStorage.getItem("activeUser") || 1;
+
+    let notes = []; // Local cache
+
+    // ------------------ CREATE NOTE → DB ------------------
+    function createNote() {
+        const title = document.getElementById("noteTitle").value.trim();
+        const content = document.getElementById("noteContent").value.trim();
+
+        if (!title || !content) {
+            showNotification("⚠️ Fill title & content");
+            return;
+        }
+
+        // Backend (NoteDto) ko ye 3 cheezein chahiye
+        const notePayload = {
+            title: title,
+            content: content,
+            userId: parseInt(activeUserId) // Logs ki error fix karne ke liye
+        };
+
+        fetch("/api/notes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(notePayload)
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to save note. Check if User exists.");
+                return res.json();
+            })
+            .then(newNote => {
+                notes.unshift(newNote);
+                renderNotes();
+                document.getElementById("noteTitle").value = "";
+                document.getElementById("noteContent").value = "";
+                showNotification("📝 Note saved");
+            })
+            .catch(err => showNotification("❌ " + err.message));
+    }
+
+    // ------------------ LOAD NOTES FROM DB (Filtered by User) ------------------
+    function loadNotes() {
+        // Aapke Controller ke path ke hisaab se: /api/notes/user/{userId}
+        fetch(`/api/notes/user/${activeUserId}`)
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to load notes");
+                return res.json();
+            })
+            .then(data => {
+                notes = data || [];
+                renderNotes();
+            })
+            .catch(err => showNotification("❌ " + err.message));
+    }
+
+    // ------------------ RENDER NOTES ------------------
+    function renderNotes() {
+        const container = document.getElementById("notesContainer");
+        if(!container) return;
+
+        container.innerHTML = "";
+
+        if (notes.length === 0) {
+            container.innerHTML = "<p class='text-muted'>No notes found for this user.</p>";
+            return;
+        }
+
+        notes.forEach(note => {
+            const div = document.createElement("div");
+            div.className = "note-card shadow-sm p-3 mb-2 bg-white rounded";
+            div.id = `note-${note.id}`;
+
+            div.innerHTML = `
+        <div class="note-actions text-end">
+            <button class="btn btn-sm text-danger" onclick="deleteNote(${note.id})">✕</button>
+        </div>
+        <h6 class="fw-bold text-primary">${escapeHtml(note.title)}</h6>
+        <p class="small text-dark">${escapeHtml(note.content)}</p>
+    `;
+            container.appendChild(div);
+        });
+    }
+
+    // ------------------ DELETE NOTE (With userId Param) ------------------
+    function deleteNote(id) {
+        if(!confirm("Are you sure want to delete ?")) return;
+
+        // Aapke logs ke mutabiq deleteNote ko userId parameter chahiye
+        fetch(`/api/notes/${id}?userId=${activeUserId}`, {
+            method: "DELETE"
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Delete failed");
+                notes = notes.filter(n => n.id !== id);
+                renderNotes();
+                showNotification("🗑️ Note deleted");
+            })
+            .catch(err => showNotification("❌ " + err.message));
+    }
+
+    // ------------------ NOTIFICATION & HELPERS ------------------
+    function showNotification(msg) {
+        console.log(msg);
+        // Agar koi toast div hai to wahan dikhayein
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // INITIAL LOAD
+    document.addEventListener("DOMContentLoaded", loadNotes);
+    // Calendar System
+    document.addEventListener("DOMContentLoaded", renderCalendar);
+    let currentDate = new Date();
+
+    function renderCalendar() {
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        document.getElementById('currentMonth').textContent =
+            `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+        const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+        const calendarGrid = document.getElementById('calendarGrid');
+        calendarGrid.innerHTML = '';
+
+        // Add day headers
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        days.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day fw-bold';
+            dayElement.textContent = day;
+            calendarGrid.appendChild(dayElement);
+        });
+
+        // Add empty cells for days before the first day of the month
+        for (let i = 0; i < firstDay.getDay(); i++) {
+            const emptyElement = document.createElement('div');
+            emptyElement.className = 'calendar-day';
+            calendarGrid.appendChild(emptyElement);
+        }
+
+        // Add days of the month
+        for (let i = 1; i <= lastDay.getDate(); i++) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            dayElement.textContent = i;
+
+            // Mark today
+            const today = new Date();
+            if (i === today.getDate() &&
+                currentDate.getMonth() === today.getMonth() &&
+                currentDate.getFullYear() === today.getFullYear()) {
+                dayElement.classList.add('active');
+            }
+
+            // Mark days with events (example: 10th, 15th, 25th)
+            if ([10, 15, 25].includes(i)) {
+                dayElement.classList.add('has-event');
+            }
+
+            calendarGrid.appendChild(dayElement);
+        }
+    }
+
+    function previousMonth() {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+    }
+
+    function nextMonth() {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+    }
+
     // Initialize the app
     document.addEventListener('DOMContentLoaded', function() {
         showNotification('🎉 Welcome to StudySmart Pro! All systems ready.');
         updateTimerDisplay();
         updateSessionTimer();
+        renderCalendar();
 
-        // Add dark theme styles
-        const style = document.createElement('style');
-        style.textContent = `
-            body.dark-theme {
-                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-                color: #f8fafc;
+        // Add some sample notes
+        notes = [
+            {
+                id: 1,
+                title: 'Web Development Tips',
+                content: 'Remember to use semantic HTML for better accessibility and SEO.',
+                date: new Date().toLocaleDateString()
+            },
+            {
+                id: 2,
+                title: 'Machine Learning Concepts',
+                content: 'Supervised learning uses labeled data, unsupervised finds patterns in unlabeled data.',
+                date: new Date().toLocaleDateString()
             }
+        ];
+        renderNotes();
 
-            body.dark-theme .card {
-                background: rgba(30, 41, 59, 0.9);
-                color: #f8fafc;
+        // Add some sample flashcards
+        flashcards = [
+            {
+                front: 'What is HTML?',
+                back: 'HyperText Markup Language - the standard language for creating web pages'
+            },
+            {
+                front: 'What is CSS?',
+                back: 'Cascading Style Sheets - used to style and layout web pages'
             }
+        ];
 
-            body.dark-theme .text-muted {
-                color: #cbd5e1 !important;
-            }
+        // Render sample flashcards
+        flashcards.forEach((card, i) => {
+            const container = document.getElementById('flashcardsContainer');
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card mb-2';
+            cardElement.innerHTML = `
+                <div class="card-body p-3">
+                    <h6>${card.front}</h6>
+                    <p class="text-muted mb-0">${card.back}</p>
+                    <button class="btn btn-sm btn-danger mt-2" onclick="deleteFlashcard(${i})">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            `;
+            container.appendChild(cardElement);
+        });
 
-            body.dark-theme .btn-outline-primary {
-                color: #cbd5e1;
-                border-color: #cbd5e1;
-            }
-
-            body.dark-theme .btn-outline-primary:hover {
-                background-color: #6366f1;
-                border-color: #6366f1;
-            }
-
-            body.dark-theme .modal-content {
-                background: #1e293b;
-                color: #f8fafc;
-            }
-        `;
-        document.head.appendChild(style);
+        if (flashcards.length > 0) {
+            updatePracticeCard();
+        }
     });
 </script>
 
